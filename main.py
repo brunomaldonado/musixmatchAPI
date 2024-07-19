@@ -4,8 +4,8 @@ import os
 import json
 import re
 import json
-import server
-from mediaPlayer import Track, MediaPlayerQueue, print_intro
+from utils import server
+from utils.mediaPlayer import Track, MediaPlayerQueue, print_intro
 from random import randint
 import time
 
