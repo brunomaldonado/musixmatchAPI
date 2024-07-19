@@ -15,14 +15,6 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-# def print_dots_after(dot_delay=0.375, duration=6):
-#     num_dots = int(duration / dot_delay)
-#     for _ in range(num_dots):
-#       print(".", end="", flush=True)
-#       time.sleep(dot_delay)
-#     # print(" ok")
-#     print(f"{bcolors.OKGREEN} ok{bcolors.ENDC}", flush=True)
-
 emojis = ['🔊', '🎼', '💽', '🎧', '🎵', '🎹', '🎶', '🎷', '🎸', '💿', '🎻', '🎙', '🪗', '🎤']
 
 def print_intro(message, dot_count=6, dot_delay=0.25):
@@ -39,22 +31,7 @@ def print_intro(message, dot_count=6, dot_delay=0.25):
     print(char, end="", flush=True)
     time.sleep(dot_delay)
 
-# def print_dots_after(width=29, dot_delay=0.375, duration=6):
-#     # total_space = width - len(title) - len("  🎧 ") - len("✓")
-#     # num_dots = total_space
-#     # dots = "." * num_dots
-#     num_dots = int(duration/ dot_delay)
-
-#     for _ in range(num_dots):
-#       print(".", end="", flush=True)
-#       time.sleep(dot_delay)
-#     print("", end="", flush=True)
-#     # print(dots + "✓", flush=True)
-#     print(f"{bcolors.OKGREEN} ok{bcolors.ENDC}", flush=True)
-
 def print_dots_after(width=46, dot_delay=0.525, duration=7):
-  # remaining_space = width - title_length - 6  # 6 is for the fixed prefix length and " ok"
-  # dots = "." * remaining_space
   dots_num = int(duration / dot_delay)
   print(" ", end="", flush=True)
   for _ in range(dots_num):
@@ -62,60 +39,6 @@ def print_dots_after(width=46, dot_delay=0.525, duration=7):
     time.sleep(dot_delay)
   # print(" ok", flush=True)
   print(f"{bcolors.OKGREEN}ok{bcolors.ENDC}", flush=True)
-
-
-# def print_dots(messages, dot_count=6, dot_delay=0.225, emoji="🎧"):
-#     for number, message in enumerate(messages, start=1):
-#       num = f"{number:2}"
-#       print(f"{num} {emoji}", end="", flush=True)
-#       for _ in range(dot_count):
-#           print(".", end="", flush=True)
-#           time.sleep(dot_delay)
-      
-#       print(" ", end="", flush=True)
-#       print(message)
-    
-  # for number, message in enumerate(messages, start=1):
-  #   num = f"{number:2}"
-  #   # dot_str = "." * dot_count
-  #   # first_part = f"  {num} {emoji}{dot_str}"
-  #   print(f"{num} {emoji}", end="", flush=True)
-  #   for _ in range(dot_count):
-  #     print(".", end="", flush=True)
-  #     time.sleep(dot_delay)
-  #   print(" ", end="", flush=True)
-  #   # print(message)
-
-  #   # Calculate remaining width for the message after first_part
-  #   first_part_length = len(f"{num} {emoji}") + dot_count + 1
-  #   remaining_width = terminal_width - first_part_length
-
-  #   words = message.split()
-  #   line = ""
-  #   lines = []
-  #   for word in words:
-  #     if len(line) + len(word) + 1 <= remaining_width:
-  #       line += " " + word if line else word
-  #     else:
-  #       lines.append(line)
-  #       line = word
-    
-  #   lines.append(line)
-  #   print(lines[0])
-
-  #   # print(f"{first_part} {lines[0]}")
-  #   # # time.sleep(dot_delay * dot_count)
-
-  #   for line in lines[1:]:
-  #     print(" " * initial_spacing + line)
-    
-  #   time.sleep(0.125)
-
-
-
-# if __name__ == "__main__":
-#     print_dots("Macarena")
-#     print_dots("Bamba")
 
 # necesitamos instanciar canciones con la clase track
 class Track:
@@ -130,17 +53,6 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
 
   def add_track(self, track):
     self.enqueue(track.title)
-  
-  def data(self):
-    # number = []
-    if self.count > 0 and self.head is not None:
-      list = self.list_data()
-      print(list)
-      # ran_num = random.randint(1, num)
-      # number.append(ran_num)
-      # print(f"pause {ran_num}")
-    # return number
-      
 
   def delay(self):
     data = self.list_data()
@@ -157,23 +69,11 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     # random_numbers = [4, 7, 2]
     sorted_numbers = sorted(random_numbers)
     # print(len(sorted_numbers))
-    # if idx == list_size:
-    #     print("pause")
-    # print(sorted_numbers)
-    # for idx in range(1, list_size + 1):
-    #   if idx in sorted_numbers:
-    #     print("pause")
-    #   else:
-    #     print("continue") 
+
     idx = 1
     while self.count > 0 and self.head is not None:
       current_track_node = self.dequeue()
-      # print(f"  {idx:2} {current_track_node}")
-      # idx += 1 
-      # if idx == ran_num:
-      #   self.print_track_with_pause(idx, current_track_node)
-      # else:
-      #   self.print_node_with_delay(idx, current_track_node)
+
       if idx <= list_size:
         if idx in sorted_numbers:
           # print("pause")
@@ -199,31 +99,12 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
 
     indices = [new_data.index(item) + 1 for item in list_fav]
     # print(f"indices {indices}")
-
     # i = 23 # test
     i = 0
-    # track = i
-    # while i < len(indices):
-    #   spacing = " " * 2
-    #   idx = i + 1
-    #   value = indices[i]
-    #   print(spacing, end="", flush=True)
-    #   track = f"{idx:2}  {value:2}"
-    #   print(track)
-    #   i += 1
-    # idx = 1
-    max_width = max(len(str(idx)) for idx in indices)
-    # print("  Track")
     while self.count > 0 and self.head is not None:
       current_track_node = self.dequeue()
-      # print_track_title(current_track_node, idx)
-      # message = f"  🎧 {current_track_node} "
-      # dot_thread = threading.Thread(target=print_dots_after, args=(current_track_node,))
-      # dot_thread.start()
-      # dot_thread.join()
-      # idx += 1
-      # i = 0
-      
+      # print_track_title(idx, current_track_node)
+
       if i < len(indices):
         idx = i + 1
         if idx < 10:
@@ -245,46 +126,10 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
         track = f"{index}  {tracks}" 
         self.print_title_with_delay(idx, track, current_track_node)
         i += 1
-        # idx += 1
-  
-  # def print_title_with_delay(self, title, idx, width=46, char_delay=0.0125):
-  #   words = title.split()
-  #   num = f"{idx:2}"
-  #   first_line_prefix = f"{num} 🎧 "
-  #   current_line = first_line_prefix
-  #   empty_line = " " * len(first_line_prefix)
-  #   first_line = True
-
-  #   for word in title.split():
-  #     if len(current_line) + len(word) + 1 > width:
-  #       print(current_line)
-  #       current_line = empty_line + word + " "
-  #     else:
-  #       current_line += word + " "
-    
-  #   remaining_space = width - len(current_line) - len(" ok")
-  #   dots = "." * remaining_space
-  #   print(current_line + dots + " ok")
-      
 
   def print_title_with_delay(self, idx, track, title, width=46, char_delay=0.0125):
-    # print(tracklist)
-    # new_data = tracklist[-1]
-    # print(f"\ntracklist {new_data}\nlen {len(new_data)}")
-    # list_fav = self.list_data()
-    # print(f"\nlist_fav {list_fav}\nlen {len(list_fav)}")
-    # indices = [new_data.index(item) + 1 for item in list_fav]
-    # print(f"indices {indices}")
-    # track = 16
     now_playing = emojis[(idx - 1) % len(emojis)]
-    # now_playing = "🎧"
-    # if idx < 10:
-    #   space = " " * 1
-    #   first_line_prefix = f"{space}{idx}  {track}  {now_playing} "
-    # else:
     first_line_prefix = f"{track} {now_playing} "
-    # add = " " if idx < 10 else ""
-    # first_line_prefix = f"{add}{track}  {idx} {now_playing} "
     current_line = first_line_prefix
     empty_line = " " * (len(first_line_prefix) - 11)
     spacing_line = " " * 11
@@ -325,8 +170,6 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
         dot_thread = threading.Thread(target=print_dots_after, args=(width,))
         dot_thread.start()
         dot_thread.join()
-
-
 
   def print_node_with_delay(self, idx,  title, width=46, char_delay=0.0125):
     first_line_prefix = f"{idx} "
@@ -397,63 +240,6 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
         dot_thread.start()
         dot_thread.join()
 
-  # Print each character with a delay
-    # for line in title_lines:
-    #   for char in line:
-    #     print(char, end="", flush=True)
-    #     time.sleep(char_delay)
-        
-    # for word in title.split():
-    #   if len(current_line) + len(word) + 1 > width:
-    #     print(current_line)
-    #     current_line = empty_line + word + " "
-    #   else:
-    #     current_line += word + " "
-    #     title_length += len(word) + 1
-
-    # print(current_line, end="", flush=True)
-    # for char in current_line[len(first_line_prefix):]:
-    #   print(char, end="", flush=True)
-    #   time.sleep(char_delay)
-    # dot_thread = threading.Thread(target=print_dots_after, args=(width,))
-    # dot_thread.start()
-    # dot_thread.join()
-
-    # if self.count > 0 and self.head is not None:
-    #   messages = self.list_data()
-
-    #   seen = set()
-    #   result = []
-    #   for item in messages:
-    #     if item not in seen:
-    #       seen.add(item)
-    #       result.append(item)
-    #     else:
-    #       if result.count(item) < 1:
-    #         result.append(item)
-      
-    #   print_dots(result)
-
-
-# def print_track_title(title, idx, width=46, start=1):
-  # words = title.split()
-  # num = f"{idx:2}"
-  # current_line = f" {num} 🎧 "
-  # first_line = True
-  # for word in words:
-  #   if len(current_line) + len(word) + 1 > width:
-  #     print(current_line)
-  #     if first_line:
-  #       current_line = " " * (len(str(idx)) + 6) + word + " "
-  #       first_line = False
-  #     else:
-  #       current_line = " " * 6 + word + " "
-  #   else:
-  #     current_line += word + " "
-  
-  # print(current_line, end="", flush=True)
-
-
 def main():
   media = MediaPlayerQueue()
   #media = MediaPlayerQueue()
@@ -464,7 +250,6 @@ def main():
   
   list_songs = ['Beautiful Things', 'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Country Road - Mountain (Tk fy AI)', 'Trabajo Por Mi Cuenta C - Los Tigres del Norte (Isis Bumr ft R.)', 'Zombie', 'When September Ends', 'Memories', 'Love You', 'W. T. F.', 'Beautiful Eyes', 'Fly', 'Mothers Daughter X Boys Dont Cry (feat. Anitta) - Live', 'Angels Like You', 'Edge of Midnight (Midnight Sky Remix) [feat. Stevie Nicks]', 'Zombie (Live from the NIVA Save Our Stages Festival)', 'Plastic Hearts']
 
-  
   #list_songs = ['Perfect', 'Trabajo Por Mi Cuenta C - Los Tigres del Norte (Isis Bumr ft R.)', 'Beautiful Things']
   print("\n")
 
@@ -495,25 +280,3 @@ def main():
   media.play()
 if __name__ == '__main__':
   main()
-
-  
-  """
-  1 🎧 Beautiful Things ..................ok
-  2 🎧 Sonido Machacas - Acatepec Guerrero 
-     Mexico y United State-New York (Pal ft 
-     Sain R. Isis Burm K. JJ) England Fix 
-     (Live - Streaming) ............... ok
-  3 🎧 Country Road .................... ok
-
-
-
-  1 🎧 Trabajo Por Mi Cuenta C - Los Tigres del 
-     R.) ............ ✓
-     AI) ............ ✓
-     Zombie ............ ✓
- 4 🎧 Sonido Machacas - Acatepec Guerrero 
-      Mexico y United State-New York (Pal ft 
-      Sain R. Isis Burm K. JJ) England Fix 
-      Streaming) ............ ✓
-     Ends ............ ✓
-  """

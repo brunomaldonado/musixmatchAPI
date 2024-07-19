@@ -9,8 +9,6 @@ from utils.mediaPlayer import Track, MediaPlayerQueue, print_intro
 from random import randint
 import time
 
-# headers = {'Content-Type': "application/json", 'Accept': "application/json"}
-
 def print_options():
   print("\n\n")
   options = [
@@ -215,34 +213,10 @@ def main():
   def song_lyrics():
     print()
     print("-" * 50)
-    # print("Songs L🎷R₷¥℞₡₵𝖎 Ŀ")
-    # print("Songs L🎷R₷¥℞₡₵  𝖎Ŀ")
-    # print("Songs Ŀ¥℞ŞⱾɨ₵₷")
     print(" Songs Ŀ¥℞ɨℂ$")
-    # print("Songs Ŀ¥℞𝖎ℂ$")
-    # print("Songs L🎷R₷¥℞₡₵  𝖘§ℭ𝕮ℂĿ¥℞𝖎₵₷")
     print("-" * 50)
-    # print(album_tracks_data)
-    
-    # for idx, song in enumerate(songs_list):
-    #   # print(song)
-    #   count = idx + 1
-    #   track = f"track{count}"
-    #   track = Track(song)
-    #   media.add_track(track)
-    # media.delay()
-
     id_songs = [id['track']['track_id'] for sublist in album_tracks_data for id in sublist]
-    # print("\n")
-    # print(id_songs)
     name_songs = [name['track']['track_name'] for sublist in album_tracks_data for name in sublist]
-    # id_map = {index: id_value for index, id_value in enumerate(id_songs)}
-    # print(id_map)
-    # name_map = {name: track for name, track in enumerate(name_songs)}
-    # print(name_map)
-    # print()
-    # print("name songs", name_songs)
-    # print()
     seen = set()
     single_names = []
     unique_id = []
@@ -288,12 +262,6 @@ def main():
     while True:
       select_track = int(input("\nGet lyrics # track: "))
       track = select_index(select_track)
-      # track_id = id_map[track]
-      # track_name = name_map[track]
-      # lyrics_songs =  server.get_songs_by_lyrics(track_id)
-      # print("\n")
-      # print(f"Title: {track_name}")
-      # print("\n" + lyrics_songs['lyrics_body'])
       if isinstance(track, int):
         track_id = id_map[track]
         track_name = name_map[track]

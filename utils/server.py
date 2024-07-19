@@ -2,9 +2,6 @@ import os, json
 #from dotenv import load_dotenv
 from requests import get, post
 
-#load_dotenv()
-#api_key = os.getenv("api_key")
-
 # Login https://www.musixmatch.com/ 
 api_key = "&apikey=d29b01a27dd289021382091564155a98" 
 #print(api_key)
