@@ -1,13 +1,7 @@
 # from dotenv import load_dotenv
-from requests import post, get
-import os
-import json
-import re
-import json
 from utils import server
 from utils.mediaPlayer import Track, MediaPlayerQueue, print_intro
 from random import randint
-import time
 
 def print_options():
   print("\n\n")
@@ -32,7 +26,6 @@ def indentation_title1(title, width=46, char_delay=0):
   empty_line = " " * (len(first_line_prefix) - 2)
   title_lines = []
   spacing_line = " " * 9
-  initial_spacing = " " * 2
 
   for word in title.split():
     if len(current_line) + len(word) + 1 > width:
@@ -42,22 +35,12 @@ def indentation_title1(title, width=46, char_delay=0):
       current_line += word + " "
     
   title_lines.append(current_line.strip())
-#   print(title_lines)
-  # print(initial_spacing, end="", flush=True)
-  # print(end="", flush=True)
   formatted_title = ""
   for i, line in enumerate(title_lines):
     if i == 0:
       formatted_title += line
-      # for char in line:
-      #   print(char, end="", flush=True)
-      #   time.sleep(char_delay)
     else:
       formatted_title += "\n" + spacing_line + line[len(empty_line):]
-      # print("\n", spacing_line, end="", flush=True)
-      # for char in line[len(empty_line):]:
-      #   print(char, end="", flush=True)
-      #   time.sleep(char_delay)    
   
   return formatted_title
 
@@ -131,6 +114,7 @@ def main():
       # if True, remove the first occurrence of song
           songs_list.remove(song)
     # print(f"{songs_list} {len(songs_list)}")
+      
     # for idx, songs in enumerate(songs_list, start=1):
     #     print(f"{idx:2} {songs}")
             
@@ -154,12 +138,8 @@ def main():
     while True:
       selection = int(input("\nSelect # song to add: "))
       add_song = select_index(selection)
-    #   option = int(input("\n[1] Select # Song   [2] Exit\nOption: "))
       if isinstance(add_song, int):
         favourite_songs.append(songs_list[add_song])
-        # selection = int(input("\nSelect # song to add: "))
-        # add_song = select_index(selection)
-        # favourite_songs.append(songs_list[add_song])
       else:
         print("invalid selection")
       option = int(input("\n[1] Select # Song   [2] Exit\nOption: "))
@@ -182,9 +162,7 @@ def main():
     album_songs = server.get_songs_by_artist(album_id[select_album])
     album_tracks_data.append(album_songs)
     # print(album_songs)
-
     # print("" * 1, "-" * 53)
- 
     print("-" * 50)
     # print(f"  Album: {artist_album[select_album]['album']['album_name']}")
     print(f"  Album: {indentation_title1(artist_album[select_album]['album']['album_name'])}")
@@ -286,7 +264,6 @@ def main():
       print("-" * 50)
       print("  Add songs as favorites")
       print("-" * 50)
-    #   print(songs_list)
       tracklist()
     elif option == 2:
       print("-" * 50)
@@ -318,6 +295,7 @@ def main():
       else:
         print_intro(" Playing Songs")
         # print(favourite_songs)
+
         seen = set()
         result = []
         for item in favourite_songs:

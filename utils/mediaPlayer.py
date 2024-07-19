@@ -1,5 +1,6 @@
 from random import randint
 from utils.queueNode import Queue
+# from queueNode import Queue
 from time import sleep
 import threading
 import time
@@ -56,6 +57,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
 
   def delay(self):
     data = self.list_data()
+  
     tracklist.append(data)
     list_size = len(self.list_data())
     # print(list_size)
@@ -71,32 +73,45 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     # print(len(sorted_numbers))
 
     idx = 1
+    i = 0
     while self.count > 0 and self.head is not None:
       current_track_node = self.dequeue()
 
       if idx <= list_size:
+        # idx = i + 1
+        # print(i)
+        if idx < 10:
+          initial_spacing = " " * 1
+          print(initial_spacing, end="", flush=True)
+          index = f".{idx}"
+        else:
+          index = f"{idx}"
+        sum = f"{index}"
+
         if idx in sorted_numbers:
           # print("pause")
-          self.print_node_with_delay(idx, current_track_node)
-          # pass
-          # self.print_track_with_pause(idx, current_track_node)
+          self.print_node_with_delay(idx, sum, current_track_node)
+          # self.print_track_with_pause(idx, sum, current_track_node)
         else:
           # print("continue") 
-          self.print_node_with_delay(idx, current_track_node)
+          self.print_node_with_delay(idx, sum, current_track_node)
+
+        # sum = f"{index}"
+        # self.print_node_with_delay(idx, sum, current_track_node)
         idx += 1
+          # i += 1
 
 
   
   def play(self):
-    # message = f"Playing songs"
-    # print_intro(message)
-    # print(f"Count: {self.count}\n")
-    new_data = tracklist[-1]
-    # print(f"\ntracklist {new_data}\nlen {len(new_data)}")
+    # tracklist = [['Noa'], ['Beautiful Things', 'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Country Road - Mountain (Tk fy AI)', 'Love and Sex', 'Zombie', 'When September Ends', 'Memories', 'Love You', 'W. T. F.', 'Beautiful Eyes', 'Fly', 'Mothers Daughter X Boys Dont Cry (feat. Anitta) - Live', 'Angels Like You', 'Edge of Midnight (Midnight Sky Remix) [feat. Stevie Nicks]', 'Zombie (Live from the NIVA Save Our Stages Festival)', 'Plastic Hearts', 'Love Me Again']]
 
+    new_data = tracklist[-1]
+    # print(f"tracklist: {tracklist}\nlen: {len(tracklist)}\n")
+    # print(f"data: {new_data}\nlen: {len(new_data)}\n")
+    # print(f"\ntracklist {new_data}\nlen {len(new_data)}")
     list_fav = self.list_data()
     # print(f"\nlist_fav {list_fav}\nlen {len(list_fav)}")
-
     indices = [new_data.index(item) + 1 for item in list_fav]
     # print(f"indices {indices}")
     # i = 23 # test
@@ -171,13 +186,13 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
         dot_thread.start()
         dot_thread.join()
 
-  def print_node_with_delay(self, idx,  title, width=46, char_delay=0.0125):
-    first_line_prefix = f"{idx} "
+  def print_node_with_delay(self, idx, sum, title, width=46, char_delay=0.0125):
+    first_line_prefix = f"{sum} "
     # print(len(current_line))
     current_line = first_line_prefix
     empty_line = " " * (len(first_line_prefix) - 4)
     title_lines = []
-    spacing_line = " " * 3
+    spacing_line = " " * 4
     initial_spacing = " " * 1
     
     for word in title.split():
@@ -203,8 +218,8 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
           time.sleep(char_delay)
 
 
-  def print_track_with_pause(self, idx,  title, width=46, char_delay=0.0125):
-    first_line_prefix = f"{idx} "
+  def print_track_with_pause(self, idx, sum, title, width=46, char_delay=0.0125):
+    first_line_prefix = f"{sum} "
     # print(len(current_line))
     current_line = first_line_prefix
     empty_line = " " * (len(first_line_prefix) - 5)
@@ -248,12 +263,11 @@ def main():
   print("-" * 99)
   # print_intro("Playing songs")
   
-  list_songs = ['Beautiful Things', 'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Country Road - Mountain (Tk fy AI)', 'Trabajo Por Mi Cuenta C - Los Tigres del Norte (Isis Bumr ft R.)', 'Zombie', 'When September Ends', 'Memories', 'Love You', 'W. T. F.', 'Beautiful Eyes', 'Fly', 'Mothers Daughter X Boys Dont Cry (feat. Anitta) - Live', 'Angels Like You', 'Edge of Midnight (Midnight Sky Remix) [feat. Stevie Nicks]', 'Zombie (Live from the NIVA Save Our Stages Festival)', 'Plastic Hearts']
+  # list_songs = ['Beautiful Things', 'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Country Road - Mountain (Tk fy AI)', 'Love and Sex', 'Zombie', 'When September Ends', 'Memories', 'Love You', 'W. T. F.', 'Beautiful Eyes', 'Fly', 'Mothers Daughter X Boys Dont Cry (feat. Anitta) - Live', 'Angels Like You', 'Edge of Midnight (Midnight Sky Remix) [feat. Stevie Nicks]', 'Zombie (Live from the NIVA Save Our Stages Festival)', 'Plastic Hearts']
 
-  #list_songs = ['Perfect', 'Trabajo Por Mi Cuenta C - Los Tigres del Norte (Isis Bumr ft R.)', 'Beautiful Things']
   print("\n")
 
-  for idx, song in enumerate(list_songs):
+  for idx, song in enumerate(tracklist):
     # print(f"{idx + 1} {song}")
     count = idx + 1
     track = f"track{count}"
@@ -262,18 +276,18 @@ def main():
 
 
   track1 = Track('Love Me Again')
-  # track2 = Track('Dame Una Noche')
-  # track3 = Track('Soy Y Sere')
-  # track4 = Track('Fanatica Sensual')
-  # track5 = Track('Love and Sex')
+  track2 = Track('Mothers Daughter X Boys Dont Cry (feat. Anitta) - Live')
+  track3 = Track('Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)')
+  track4 = Track('Beautiful Things')
+  track5 = Track('Love and Sex')
   # track6 = Track('No Quiero Que Te Vayas')
   # track7 = Track('Fanatica Sensual')
 
   media.add_track(track1)
-  # media.add_track(track2)
-  # media.add_track(track3)
-  # media.add_track(track4)
-  # media.add_track(track5)
+  media.add_track(track2)
+  media.add_track(track3)
+  media.add_track(track4)
+  media.add_track(track5)
   # media.add_track(track6)
   # media.add_track(track7)
 

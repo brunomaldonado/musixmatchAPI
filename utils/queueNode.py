@@ -73,7 +73,6 @@ class Queue:
     while current is not None:
       elements.append(current.data)
       current = current.next
-
     return elements
 
   def __str__(self):
@@ -81,7 +80,6 @@ class Queue:
       # raise IndexError("Empty!!!")
       print("List Empty!!!")
       return
-    
     elements = []
     current = self.head
     while current is not None:
@@ -94,8 +92,6 @@ class Queue:
       self.head
 
     return "[" + ", ".join(elements) + "]"
-
-
 
 def main():
   Q = Queue()
