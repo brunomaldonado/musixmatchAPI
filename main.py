@@ -1,13 +1,12 @@
-# from dotenv import load_dotenv
 from utils import server
 from utils.mediaPlayer import Track, MediaPlayerQueue, print_intro
-from random import randint
+from utils.config import content_data
 
 def print_options():
   print("\n\n")
   options = [
-    "[1] Ądd Ş🎧ngs",
-    "[2] Şelect Ąlbum",
+    "[1] Ⱥdd Ş🎧ngs",
+    "[2] Şelect Ⱥlbum",
     "[3] Șearch 🎭",
     "[4] ⚝ Favourites",
     "[5] Ș🥁ng l¥rįç$",
@@ -68,9 +67,8 @@ def indentation_title2(title, width=46, char_delay=0):
 def main():
   media = MediaPlayerQueue()
   # print("\n")
-  # print("" * 1, "-" * 53)
-  print("-" * 50)
-  search = input(f"Enter Artist name: ")
+  print("" * 1, "-" * 53)
+  search = input(f" Enter Artist name: ")
   artist_search = server.search_for_artist(search)
   artist_id = artist_search['artist']['artist_id']
   # print(artist_id)
@@ -82,11 +80,11 @@ def main():
   else:
     pass
   
-  print("-" * 50)
+  print("" * 1, "-" * 53)
   print(f"  Artist: {artist_search['artist']['artist_name']}")
   print(f"  Country: {artist_search['artist']['artist_country']}")
   print(f"  {len(artist_album)} Album")
-  print("-" * 50)
+  print("" * 1, "-" * 53)
 
   album_name = []
   for idx, album in enumerate(artist_album, start=1):
@@ -134,6 +132,7 @@ def main():
         return "Invalid Selection"
     
     print()
+    content_data.append(songs_list)
 
     while True:
       selection = int(input("\nSelect # song to add: "))
@@ -163,14 +162,14 @@ def main():
     album_tracks_data.append(album_songs)
     # print(album_songs)
     # print("" * 1, "-" * 53)
-    print("-" * 50)
+    print("" * 1, "-" * 53)
     # print(f"  Album: {artist_album[select_album]['album']['album_name']}")
     print(f"  Album: {indentation_title1(artist_album[select_album]['album']['album_name'])}")
     print(f"  Artist: {artist_album[select_album]['album']['artist_name']}")
     print(f"  Date: {artist_album[select_album]['album']['album_release_date']}")
     print(f"  Copyright: {indentation_title2(artist_album[select_album]['album']['album_copyright'])}")
     print(f"  {len(album_songs)} Tracks")
-    print("-" * 50)
+    print("" * 1, "-" * 53)
 
     album_tracks = [] # for the delay function from mediaPlayer 
     for idx, track in enumerate(album_songs, start=1):
@@ -190,9 +189,9 @@ def main():
 
   def song_lyrics():
     print()
-    print("-" * 50)
-    print(" Songs Ŀ¥℞ɨℂ$")
-    print("-" * 50)
+    print("" * 1, "-" * 53)
+    print("  Şongs ƪ¥℞ɨÇ$")
+    print("" * 1, "-" * 53)
     id_songs = [id['track']['track_id'] for sublist in album_tracks_data for id in sublist]
     name_songs = [name['track']['track_name'] for sublist in album_tracks_data for name in sublist]
     seen = set()
@@ -261,16 +260,16 @@ def main():
     option = int(input("\nOption: "))
     if option == 1:
       print()
-      print("-" * 50)
-      print("  Add songs as favorites")
-      print("-" * 50)
+      print("" * 1, "-" * 53)
+      print("  Ⱥdd Şongs Ⱥs Favorites")
+      print("" * 1, "-" * 53)
       tracklist()
     elif option == 2:
-      print("-" * 50)
+      print("" * 1, "-" * 53)
       print(f"  Artist: {artist_search['artist']['artist_name']}")
       print(f"  Country: {artist_search['artist']['artist_country']}")
       print(f"  {len(artist_album)} Album")
-      print("-" * 50)
+      print("" * 1, "-" * 53)
       
       for idx, album in enumerate(album_name, start=1):
         count = idx + 1
@@ -284,14 +283,15 @@ def main():
     elif option == 3:
       main()
     elif option == 4:
-      print("-" * 50)
-      print(" ⭐️ Favourite Songs")
+      # print("CONTENT DATA MAIN", content_data)
+      print("" * 1, "-" * 53)
+      print("  ⭐️ Favourite Songs")
       print(f"  Artist: {artist_search['artist']['artist_name']}")
       print(f"  Country: {artist_search['artist']['artist_country']}")
-      print("-" * 50)
+      print("" * 1, "-" * 53)
       print()
       if len(favourite_songs) == 0:
-        print("No songs added as favorites")
+        print("             Ɲo Ş🎧ngs Ⱥdded Ⱥs Favorites")
       else:
         print_intro(" Playing Songs")
         # print(favourite_songs)
@@ -307,7 +307,6 @@ def main():
               result.append(item)
         # print(result)
         print("\n")
-        # print("Track")
         for idx, song in enumerate(result):
         #   print(f"{idx + 1} {song}")
           count = idx + 1

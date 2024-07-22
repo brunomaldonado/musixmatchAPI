@@ -1,12 +1,21 @@
 # musixmatchAPI
 Musixmatch API with QUEUE data structure on python
 
-<!-- <table>
-  <tr>
-    <td valign="top"><img src="./screenshot/enqueue.PNG" style="border-radius:6px" width="50%  alt="loading"></td>
-    <td valign="top"><img src="./screenshot/dequeue.gif" style="border-radius:6px" width="100%  alt="start new task"></td>
-  </tr>
-</table> -->
+```sh
+git clone https://github.com/brunomaldonado/musixmatchAPI.git
+cd musixmatchAPI
+python3 main.py
+```
+
+##### To run mediaPlayer, uncomment and comment line 4, 5
+
+```sh
+cd utils/
+python3 mediaPlayer.py
+# from queueNode import Queue
+# from config import content_data, example
+```
+
 <p align="center">
   <img src="./screenshot/enqueue.PNG" style="border-radius:6px" width="45%" alt="trinidad_and_tobago chart">
 &nbsp; &nbsp; &nbsp; &nbsp;

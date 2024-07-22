@@ -1,6 +1,10 @@
 from random import randint
+import sys
+sys.path.insert(0, '../src')
 from utils.queueNode import Queue
+from utils.config import content_data, example
 # from queueNode import Queue
+# from config import content_data, example
 from time import sleep
 import threading
 import time
@@ -41,13 +45,16 @@ def print_dots_after(width=46, dot_delay=0.525, duration=7):
   # print(" ok", flush=True)
   print(f"{bcolors.OKGREEN}ok{bcolors.ENDC}", flush=True)
 
+# def another_function():
+#   print("DATA LINT MEDIA ANOTHER FUNCTION", content_data)
+
 # necesitamos instanciar canciones con la clase track
 class Track:
   def __init__(self, title=None):
     self.title = title
     self.duration = randint(0, 1) # 5 o 6 seconds the play the songs
 
-tracklist = []
+# example = []
 class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (programacion orientado a objetos)
   def __init__(self):
     super(MediaPlayerQueue, self).__init__()
@@ -56,9 +63,6 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     self.enqueue(track.title)
 
   def delay(self):
-    data = self.list_data()
-  
-    tracklist.append(data)
     list_size = len(self.list_data())
     # print(list_size)
     # ran_num = random.randint(1, list_size)
@@ -73,13 +77,10 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     # print(len(sorted_numbers))
 
     idx = 1
-    i = 0
     while self.count > 0 and self.head is not None:
       current_track_node = self.dequeue()
 
       if idx <= list_size:
-        # idx = i + 1
-        # print(i)
         if idx < 10:
           initial_spacing = " " * 1
           print(initial_spacing, end="", flush=True)
@@ -99,20 +100,16 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
         # sum = f"{index}"
         # self.print_node_with_delay(idx, sum, current_track_node)
         idx += 1
-          # i += 1
 
-
-  
   def play(self):
-    # tracklist = [['Noa'], ['Beautiful Things', 'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Country Road - Mountain (Tk fy AI)', 'Love and Sex', 'Zombie', 'When September Ends', 'Memories', 'Love You', 'W. T. F.', 'Beautiful Eyes', 'Fly', 'Mothers Daughter X Boys Dont Cry (feat. Anitta) - Live', 'Angels Like You', 'Edge of Midnight (Midnight Sky Remix) [feat. Stevie Nicks]', 'Zombie (Live from the NIVA Save Our Stages Festival)', 'Plastic Hearts', 'Love Me Again']]
-
-    new_data = tracklist[-1]
-    # print(f"tracklist: {tracklist}\nlen: {len(tracklist)}\n")
-    # print(f"data: {new_data}\nlen: {len(new_data)}\n")
-    # print(f"\ntracklist {new_data}\nlen {len(new_data)}")
-    list_fav = self.list_data()
-    # print(f"\nlist_fav {list_fav}\nlen {len(list_fav)}")
-    indices = [new_data.index(item) + 1 for item in list_fav]
+    if len(content_data) == 0:
+      current_list = example
+    else:
+      current_list = content_data[0]
+    favorites_list = self.list_data()
+    # print(f"\nfavorites list {favorites_list}\nlen {len(favorites_list)}")
+    # indices = [content_data[0].index(item) + 1 for item in favorites_list]
+    indices = [current_list.index(item) + 1 for item in favorites_list]
     # print(f"indices {indices}")
     # i = 23 # test
     i = 0
@@ -257,17 +254,12 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
 
 def main():
   media = MediaPlayerQueue()
-  #media = MediaPlayerQueue()
-  #print("hello world")
   print()
-  print("-" * 99)
-  # print_intro("Playing songs")
-  
-  # list_songs = ['Beautiful Things', 'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Country Road - Mountain (Tk fy AI)', 'Love and Sex', 'Zombie', 'When September Ends', 'Memories', 'Love You', 'W. T. F.', 'Beautiful Eyes', 'Fly', 'Mothers Daughter X Boys Dont Cry (feat. Anitta) - Live', 'Angels Like You', 'Edge of Midnight (Midnight Sky Remix) [feat. Stevie Nicks]', 'Zombie (Live from the NIVA Save Our Stages Festival)', 'Plastic Hearts']
-
+  print(" " * 1, "-" * 53)
+  songs = ['Perfect', 'Stay Alive']
   print("\n")
 
-  for idx, song in enumerate(tracklist):
+  for idx, song in enumerate(songs):
     # print(f"{idx + 1} {song}")
     count = idx + 1
     track = f"track{count}"
@@ -275,11 +267,11 @@ def main():
     media.add_track(track)
 
 
-  track1 = Track('Love Me Again')
-  track2 = Track('Mothers Daughter X Boys Dont Cry (feat. Anitta) - Live')
+  track1 = Track('Beautiful Things')
+  track2 = Track('Love Me Again')
   track3 = Track('Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)')
-  track4 = Track('Beautiful Things')
-  track5 = Track('Love and Sex')
+  track4 = Track('Love and Sex')
+  track5 = Track('Something of My Own (Project Regeneration)')
   # track6 = Track('No Quiero Que Te Vayas')
   # track7 = Track('Fanatica Sensual')
 
