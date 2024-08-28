@@ -17,7 +17,7 @@ python3 mediaPlayer.py
 ```
 
 <p align="center">
-  <img src="./screenshot/main.PNG" style="border-radius:6px" width="45%" alt="trinidad_and_tobago chart">
+  <img src="./screenshot/main.png" style="border-radius:6px" width="45%" alt="trinidad_and_tobago chart">
 &nbsp; &nbsp; &nbsp; &nbsp;
   <img src="./screenshot/dequeue.gif" style="border-radius:6px" width="41%" alt="united arab emirates chart">
 </p>
