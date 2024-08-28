@@ -20,12 +20,12 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-emojis = ['🔊', '🎼', '💽', '🎧', '🎵', '🎹', '🎶', '🎷', '🎸', '💿', '🎻', '🎙', '🪗', '🎤']
+emojis = ['🔊', '🎼', '💽', '🎧', '🎵', '🎻', '🎶', '🎷', '🎸', '💿', '🎹', '🎙', '🪗', '🎤']
 
 def print_intro(message, dot_count=6, dot_delay=0.25):
   random = randint(0, 5)
   play = ' '.join(map(str, emojis[random]))
-  print(f".♩♪...♩.{play}", end="", flush=True)
+  print(f"  .♩♪...♩.{play}", end="", flush=True)
   for _ in range(dot_count):
     print(".", end="", flush=True)
     time.sleep(dot_delay)
@@ -42,8 +42,8 @@ def print_dots_after(width=46, dot_delay=0.525, duration=7):
   for _ in range(dots_num):
     print(".", end="", flush=True)
     time.sleep(dot_delay)
-  # print(" ok", flush=True)
-  print(f"{bcolors.OKGREEN}ok{bcolors.ENDC}", flush=True)
+  print(" ok", flush=True)
+  #print(f"{bcolors.OKGREEN}ok{bcolors.ENDC}", flush=True)
 
 # def another_function():
 #   print("DATA LINT MEDIA ANOTHER FUNCTION", content_data)
