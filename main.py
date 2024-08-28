@@ -250,7 +250,7 @@ def main():
         # print(lyrics_songs)
       else:
         print(" invalid selection")
-      option = int(input("\n[1] Select other track #?   [2] Exit\n Option: "))
+      option = int(input("\n [1] Select other track #?   [2] Exit\n Option: "))
       if option == 2:
         break
 
