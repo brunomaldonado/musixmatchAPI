@@ -180,8 +180,8 @@ def main():
     artists = ', '.join(list(unique_artists))
     countries = ', '.join(list(unique_countries))
 
-    name_artist = ['Simple Plan', 'Miley Cyrus', 'Green Day', 'Dua Lipa']
-    name_artists = ', '.join(list(name_artist))
+    # name_artist = ['Simple Plan', 'Miley Cyrus', 'Green Day', 'Dua Lipa']
+    # name_artists = ', '.join(list(name_artist))
 
     if len(list_favorite_songs) == 0:
       print("" * 1, "-" * 53)
@@ -195,10 +195,12 @@ def main():
       print("" * 1, "-" * 53)
       print("  ⭐️ Favourite Songs")
       print(f"  Artists: {indentation_title3(artists)}")
-      print(f"  Artists: {indentation_title3(name_artists)}")
+      # print(f"  Artists: {indentation_title3(name_artists)}")
       print(f"  Countries: {countries}")
       print("" * 1, "-" * 53)
-
+      print()
+      print_intro(" Listening songs...")
+      print()
       seen = set()
       result = []
       for item in list_favorite_songs:

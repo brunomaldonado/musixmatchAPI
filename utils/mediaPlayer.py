@@ -25,7 +25,7 @@ emojis = ['🔊', '🎼', '💽', '🎧', '🎵', '🎻', '🎶', '🎷', '🎸'
 def print_intro(message, dot_count=6, dot_delay=0.25):
   random = randint(0, 5)
   play = ' '.join(map(str, emojis[random]))
-  print(f"  .♩♪...♩.{play}", end="", flush=True)
+  print(f"  ♪♩.{play}.♩♪...♩.", end="", flush=True)
   for _ in range(dot_count):
     print(".", end="", flush=True)
     time.sleep(dot_delay)
