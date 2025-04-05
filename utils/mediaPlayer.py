@@ -64,9 +64,8 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
 
   def delay(self):
     list_size = len(self.list_data())
-    # print(list_size)
-    # ran_num = random.randint(1, list_size)
-    # print(ran_num)
+    # print(f"LIST SIZE\n{list_size}")
+
     if list_size < 3:
       sample_size = list_size
     else:
@@ -79,49 +78,64 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     idx = 1
     while self.count > 0 and self.head is not None:
       current_track_node = self.dequeue()
+      self.print_node_with_delay(idx, current_track_node)
 
-      if idx <= list_size:
-        if idx < 10:
-          initial_spacing = " " * 1
-          print(initial_spacing, end="", flush=True)
-          index = f".{idx}"
-        else:
-          index = f"{idx}"
-        sum = f"{index}"
+      # if i < list_size:
+      #   idx = i + 1
+      #   if idx > 0 and idx < 10:
+      #     spacing_after = " " * 0
+      #     initial_space = (" " * 3)
+      #     print(spacing_after, end="", flush=True)
+      #     index = f"{initial_space}{idx}"
+      #   else:
+      #     index = f"{" " * 2}{idx}"
+        
+      #   self.print_node_with_delay(index, current_track_node)
 
-        if idx in sorted_numbers:
-          # print("pause")
-          self.print_node_with_delay(idx, sum, current_track_node)
-          # self.print_track_with_pause(idx, sum, current_track_node)
-        else:
-          # print("continue") 
-          self.print_node_with_delay(idx, sum, current_track_node)
 
-        # sum = f"{index}"
-        # self.print_node_with_delay(idx, sum, current_track_node)
-        idx += 1
+        # if idx in sorted_numbers:
+        #   # print("pause")
+        #   self.print_node_with_delay(idx, index, current_track_node)
+        #   # self.print_track_with_pause(index, current_track_node)
+        # else:
+        #   # print("continue") 
+        #   self.print_node_with_delay(idx, index, current_track_node)
+      idx += 1
 
-  def play(self):
+  def play(self):    
+    # print(f"\n\nLIST DATA {len(self.list_data())}\n\nCONTENT DATA {content_data}\nlen {len(content_data)}\n")
+    # print()
+
     if len(content_data) == 0:
       current_list = example
     else:
-      current_list = content_data[0]
+      current_list = content_data
+
     favorites_list = self.list_data()
-    # print(f"\nfavorites list {favorites_list}\nlen {len(favorites_list)}")
-    # indices = [content_data[0].index(item) + 1 for item in favorites_list]
-    indices = [current_list.index(item) + 1 for item in favorites_list]
-    # print(f"indices {indices}")
-    # i = 23 # test
+    # print(f"\n\nfavorites list {favorites_list}\nlen {len(favorites_list)}\n")
+
+    indices = []
+
+    for item in favorites_list:
+      for sublist in current_list:
+        if item in sublist:
+          indices.append(sublist.index(item) + 1)
+          break
+
+    # print(f"\nindices {indices}\n")
+
+    # idx = 1
     i = 0
     while self.count > 0 and self.head is not None:
       current_track_node = self.dequeue()
-      # print_track_title(idx, current_track_node)
+      # self.print_title_with_delay(idx, current_track_node)
+      # idx += 1
 
       if i < len(indices):
         idx = i + 1
         if idx < 10:
-          initial_spacing = " " * 1
-          print(initial_spacing, end="", flush=True)
+          spacing_line = " " * 1
+          print(spacing_line, end="", flush=True)
           index = f"{idx}"
         else:
           index = f"{idx}"
@@ -147,7 +161,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     spacing_line = " " * 11
     words = title.split()
     title_lines = []
-    initial_spacing = " " * 1
+    spacing_line = " " * 1
 
 
     for word in words:
@@ -159,7 +173,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
   
     title_lines.append(current_line.strip())
 
-    print(initial_spacing, end="", flush=True)
+    print(spacing_line, end="", flush=True)
     # Print each line of the title with a delay
     for i, line in enumerate(title_lines):
       if i == 0:
@@ -183,14 +197,26 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
         dot_thread.start()
         dot_thread.join()
 
-  def print_node_with_delay(self, idx, sum, title, width=46, char_delay=0.0125):
-    first_line_prefix = f"{sum} "
-    # print(len(current_line))
+
+  def print_node_with_delay(self, idx, title, width=46, char_delay=0.0125):
+    if idx > 0 and idx < 10:
+      spacing_after = " " * 0
+      initial_space = (" " * 2)
+      print(spacing_after, end="", flush=True)
+      index = f"{initial_space}{idx}"
+    else:
+      initial_space = " "
+      index = f"{idx}"
+
+    # first_line_prefix = f"{idx} {title}"
+    # print(first_line_prefix)
+    # print(idx, title)
+
+    first_line_prefix = f"{index} "
     current_line = first_line_prefix
     empty_line = " " * (len(first_line_prefix) - 4)
     title_lines = []
     spacing_line = " " * 4
-    initial_spacing = " " * 1
     
     for word in title.split():
       if len(current_line) + len(word) + 1 > width:
@@ -201,7 +227,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     title_lines.append(current_line.strip())
     
     # print each line of the title with a delay
-    print("\n", initial_spacing, end="", flush=True)
+    print("\n", initial_space, end="", flush=True)
     for i, line in enumerate(title_lines):
       if i == 0:
         for char in line:
@@ -215,42 +241,42 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
           time.sleep(char_delay)
 
 
-  def print_track_with_pause(self, idx, sum, title, width=46, char_delay=0.0125):
-    first_line_prefix = f"{sum} "
-    # print(len(current_line))
-    current_line = first_line_prefix
-    empty_line = " " * (len(first_line_prefix) - 5)
-    title_lines = []
-    spacing_line = " " * 4
-    initial_spacing = " " * 1
+  # def print_track_with_pause(self, idx, title, width=46, char_delay=0.0125):
+  #   first_line_prefix = f"{idx} "
+  #   # print(len(current_line))
+  #   current_line = first_line_prefix
+  #   empty_line = " " * (len(first_line_prefix) - 5)
+  #   title_lines = []
+  #   spacing_line = " " * 4
+  #   spacing_line = " " * 1
     
-    for word in title.split():
-      if len(current_line) + len(word) + 1 > width:
-        title_lines.append(current_line.strip())
-        current_line = empty_line + word + " "
-      else:
-        current_line += word + " "
-    title_lines.append(current_line.strip())
+  #   for word in title.split():
+  #     if len(current_line) + len(word) + 1 > width:
+  #       title_lines.append(current_line.strip())
+  #       current_line = empty_line + word + " "
+  #     else:
+  #       current_line += word + " "
+  #   title_lines.append(current_line.strip())
     
-    # print each line of the title with a delay
-    print("\n", initial_spacing, end="", flush=True)
-    for i, line in enumerate(title_lines):
-      if i == 0:
-        for char in line:
-          print(char, end="", flush=True)
-          time.sleep(char_delay)
-      else:
-      # print subsequent lines with proper identation
-        print("\n", spacing_line, end="", flush=True)
-        for char in line[len(empty_line):]:
-          print(char, end="", flush=True)
-          time.sleep(char_delay)
+  #   # print each line of the title with a delay
+  #   print("\n", spacing_line, end="", flush=True)
+  #   for i, line in enumerate(title_lines):
+  #     if i == 0:
+  #       for char in line:
+  #         print(char, end="", flush=True)
+  #         time.sleep(char_delay)
+  #     else:
+  #     # print subsequent lines with proper identation
+  #       print("\n", spacing_line, end="", flush=True)
+  #       for char in line[len(empty_line):]:
+  #         print(char, end="", flush=True)
+  #         time.sleep(char_delay)
       
-      # If it's the last line of the title, print dots
-      if i == len(title_lines) - 1:
-        dot_thread = threading.Thread(target=print_dots_after, args=(width,))
-        dot_thread.start()
-        dot_thread.join()
+  #     # If it's the last line of the title, print dots
+  #     if i == len(title_lines) - 1:
+  #       dot_thread = threading.Thread(target=print_dots_after, args=(width,))
+  #       dot_thread.start()
+  #       dot_thread.join()
 
 def main():
   media = MediaPlayerQueue()
