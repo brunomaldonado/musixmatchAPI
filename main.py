@@ -1,7 +1,7 @@
 from utils import server
 from utils.mediaPlayer import Track, MediaPlayerQueue, print_intro
 from utils.config import content_data, list_favorite_songs, list_favorite_artists, list_artists_countries, indentation_title1, indentation_title2, indentation_title3
-
+import random
 def print_options():
   print("\n")
   options = [
@@ -167,21 +167,33 @@ def main():
   album_list()
 
   def favorite_sogns():
+    my_dict = {}
+    artist_list = []
+    for artist, country in zip(list_favorite_artists, list_artists_countries):
+      my_dict[artist] = country
+      a_c = f"{artist} ({country})"
+      artist_list.append(a_c)
+    
+    # print(f"\n{my_dict}\n{artist_list}")
+
     unique_artists = []
-    unique_countries = []
-    for artist in list_favorite_artists:
+    for artist in artist_list:
       if artist not in unique_artists:
         unique_artists.append(artist)
-    
-    for country in list_artists_countries:
-      if country not in unique_countries:
-        unique_countries.append(country)
 
     artists = ', '.join(list(unique_artists))
-    countries = ', '.join(list(unique_countries))
+    # print(artists)
 
-    # name_artist = ['Simple Plan', 'Miley Cyrus', 'Green Day', 'Dua Lipa']
-    # name_artists = ', '.join(list(name_artist))
+    random_number = random.randint(2, 4)
+    # print(random_number)
+    song_genre = ['Pop', 'Ambient', 'Alternative', 'Dance']
+    if len(unique_artists) <= 2:
+      list_song_genres = random.sample(song_genre, 1)
+    else:
+      list_song_genres = random.sample(song_genre, random_number)
+    # print(list_song_genres)
+    gender_list = ', '.join(list_song_genres)
+    # print(gender_list)
 
     if len(list_favorite_songs) == 0:
       print("" * 1, "-" * 53)
@@ -193,13 +205,14 @@ def main():
       print("\n")
     else:
       print("" * 1, "-" * 53)
-      print("  ⭐️ Favourite Songs")
+      print("  ⭐️ Favourite S🎧ngs")
       print(f"  Artists: {indentation_title3(artists)}")
-      # print(f"  Artists: {indentation_title3(name_artists)}")
-      print(f"  Countries: {countries}")
+      print(f"\n  {gender_list}")
       print("" * 1, "-" * 53)
       print()
-      print_intro(" Listening songs...")
+
+      print_intro(" Playing playlist..♪....♩♪...♩.")
+
       print()
       seen = set()
       result = []

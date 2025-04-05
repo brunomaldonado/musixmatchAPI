@@ -1,3 +1,4 @@
+import random
 nested_list = [['a', 'b'], ['g', 'w', 's']]
 
 # Convertir la lista anidada en una sola lista
@@ -22,25 +23,20 @@ if len(list1) == 0:
 else:
   current_list = list1
 
-# for item in list2:
-#   for sublist in current_list:
-#     if item in sublist:
-#       indices.append(sublist.index(item) + 1)
-#       break
-
 for item in list2:
-  found = False
-  for sublist in available:
+  for sublist in current_list:
     if item in sublist:
       indices.append(sublist.index(item) + 1)
-      # sublist[sublist.index(item)] = None # Marcar como usado
-      found = True
       break
-  if not found:
-    indices.append(None) # Por si algun item no se encuentra (optional)
-print(indices)
-# join_list = [item for sublist in list1 for item in sublist]
-# indices = [join_list.index(item) + 1 for item in list2]
-# print(f"\n{join_list}\n{indices}")
 
-# [1, 2, 4, 1]
+join_list = [item for sublist in list1 for item in sublist]
+indices = [join_list.index(item) + 1 for item in list2]
+print(f"\n{join_list}\n{indices}")
+
+random_number = random.randint(1, 4)
+# print(random_number)
+song_genre = ['Pop', 'Ambient', 'Alternative', 'Dance']
+list_song_genres = random.sample(song_genre, random_number)
+print(list_song_genres)
+gender_list = ', '.join(list_song_genres)
+print(gender_list)
