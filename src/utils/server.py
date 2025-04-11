@@ -16,6 +16,7 @@ def search_for_artist(artist_name):
     result = get(query_url, headers=headers)
     # print(result)
     json_result = json.loads(result.content)
+    # print(json_result)
     json_result = json_result['message']['body']['artist_list']
     
     if len(json_result) == 0:

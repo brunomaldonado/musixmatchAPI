@@ -1,4 +1,5 @@
 content_data = []
+media_songs_list = []
 list_favorite_songs = []
 list_favorite_artists = []
 list_artists_countries = []

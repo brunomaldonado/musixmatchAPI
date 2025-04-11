@@ -1,7 +1,8 @@
 from utils import server
 from utils.mediaPlayer import Track, MediaPlayerQueue, print_intro
-from utils.config import content_data, list_favorite_songs, list_favorite_artists, list_artists_countries, indentation_title1, indentation_title2, indentation_title3
+from utils.config import content_data, list_favorite_songs, media_songs_list, list_favorite_artists, list_artists_countries, indentation_title1, indentation_title2, indentation_title3
 import random
+
 def print_options():
   print("\n")
   options = [
@@ -34,8 +35,11 @@ def main():
   else:
     pass
   
+  artist_name = {search_artist['artist']['artist_name']}
+  artist = list(artist_name)[0]
+
   print("" * 1, "-" * 53)
-  print(f"  Artist: {search_artist['artist']['artist_name']}")
+  print(f"  Artist: {artist}")
   print(f"  Country: {search_artist['artist']['artist_country']}")
   print(f"  {len(artist_album)} Album")
   print("" * 1, "-" * 53)
@@ -57,9 +61,9 @@ def main():
   print()
 
   songs_list = []
+  print_songs_list = []
   def tracklist():
     # print(songs_list)
-
     for song in songs_list:
       # check if the count of song is > 1 (repeating item)
       if songs_list.count(song) > 1:
@@ -69,8 +73,16 @@ def main():
       
     # for idx, songs in enumerate(songs_list, start=1):
     #     print(f"{idx:2} {songs}")
-            
-    for idx, song in enumerate(songs_list, start=1):
+
+    # print(f"song_list\n {songs_list}\n\n")
+    media_songs_list.append(songs_list)
+    content_data.append(songs_list)
+
+    for song in print_songs_list:
+      if print_songs_list.count(song) > 1:
+        print_songs_list.remove(song)
+  
+    for idx, song in enumerate(print_songs_list, start=1):
       count = idx + 1
       track = f"track{count}"
       track = Track(song)
@@ -80,18 +92,17 @@ def main():
     print()
     
     def select_index(selection):
-      if 1 <= selection <= len(songs_list):
+      if 1 <= selection <= len(print_songs_list):
         return selection - 1
       else:
         return " Invalid Selection"
     
     print()
-    content_data.append(songs_list)
     
     attempts = 1
     while True:
       try:
-        selection = int(input("\n Selected song # for add: "))
+        selection = int(input("\n Selected song # to add: "))
         add_song = select_index(selection)
         if isinstance(add_song, int):
           list_favorite_songs.append(songs_list[add_song])
@@ -102,18 +113,27 @@ def main():
             artist_country = f"&$"
           else:
             artist_country = country
-          list_artists_countries.append(artist_country)
+
+          list_artists_countries.append(artist_country) 
+
+          if list_favorite_songs.count(songs_list[add_song]) > 1:
+            print(" This song has been added recently...")
+          else:
+            continue
+
         else:
-          print(" Invalid selection.")
+          print(" Enter a number of song to add.")
           if attempts > 3:
             tracklist()
             break
         option = int(input("\n [1] Selected song #   [2] Exit\n Option: "))
+
         if option == 2:
           break
       except ValueError:
-        print(" Invalid selection")
+        print(" Invalid selection. Please enter a number.")
       attempts += 1
+
 
   album_tracks_data = []
   def album_list():
@@ -146,23 +166,28 @@ def main():
           print("" * 1, "-" * 53)
 
           album_tracks = [] # for the delay function from mediaPlayer 
-          for idx, track in enumerate(album_songs, start=1):
-              # print(f"{idx:2} {track['track']['track_name']}")
-              album_tracks.append(track['track']['track_name'])
-              songs_list.append(track['track']['track_name'])
           
+          for idx, track in enumerate(album_songs, start=1):
+            # print(f"{idx:2} {track['track']['track_name']}")
+            name_songs = track['track']['track_name']
+            artist_song = f"{artist} - {name_songs}"
+            # album_tracks.append(artist_song)
+            album_tracks.append(track['track']['track_name'])
+            songs_list.append(artist_song)
+            print_songs_list.append(track['track']['track_name'])
+
           for idx, name in enumerate(album_tracks, start=1):
             count = idx + 1
             track = f"track{count}"
             track = Track(name)
             media.add_track(track)
-          
+        
           media.delay()
           break
         else:
-          print(" Please enter a number of lbums")
+          print(" Please enter a number of albums.")
       except ValueError:
-        print(" Invalid Selection!. Please enter a number")
+        print(" Invalid Selection!. Please enter a number.")
   
   album_list()
 
@@ -187,6 +212,7 @@ def main():
     random_number = random.randint(2, 4)
     # print(random_number)
     song_genre = ['Pop', 'Ambient', 'Alternative', 'Dance']
+
     if len(unique_artists) <= 2:
       list_song_genres = random.sample(song_genre, 1)
     else:
@@ -225,6 +251,7 @@ def main():
             result.append(item)
       # print(result)
       print("\n")
+
       for idx, song in enumerate(result):
       #   print(f"{idx + 1} {song}")
         count = idx + 1
@@ -298,7 +325,7 @@ def main():
           # print()
           # print(lyrics_songs)
         else:
-          print(' invalid selection')
+          print(' Please enter a number of lyrics songs.')
           if attempts > 3:
             song_lyrics()
             break
@@ -306,7 +333,7 @@ def main():
         if option == 2:
           break
       except ValueError:
-        print(" Invalid Selection!")
+        print(" Invalid Selection!. Please enter a number.")
       attempts += 1
       
   while True:
@@ -335,6 +362,7 @@ def main():
         media.delay()
         album_list()
       elif option == 3:
+        media_songs_list.clear()
         main()
       elif option == 4:
         favorite_sogns()
@@ -344,7 +372,7 @@ def main():
         exit()
     except ValueError:
       print(" Invalid selection, please enter a number!.")
-  
+
 #   while True:
 #     retry = input(f"\n\nDo yu want to run again? (y/n): ").strip().lower()
 #     if retry == 'y':
@@ -358,3 +386,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

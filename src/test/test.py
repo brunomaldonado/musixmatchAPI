@@ -11,8 +11,8 @@ example = [['Beautiful Things', 'Sonido Machacas - Acatepec Guerrero Mexico y Un
 # list1 = []
 # list2 = ['Perfect', 'Stay Alive', 'Beautiful Things', 'Love Me Again', 'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Love and Sex', 'Something of My Own (Project Regeneration)']
 
-list1 = [['ana', 'pera', 'uno', 'lana'], ['liz', 'jess', 'diana', 'linda'], ['ana', 'pera', 'uno', 'lana']]
-list2 = ['pera', 'lana', 'liz', 'ana']
+list1 = [['ana', 'karen', 'kenia', 'fer'], ['liz', 'jess', 'diana', 'vane'], ['ana', 'karen', 'kenia', 'fer']]
+list2 = ['karen', 'fer', 'liz', 'ana']
 
 available = [sublist.copy() for sublist in list1]
 
