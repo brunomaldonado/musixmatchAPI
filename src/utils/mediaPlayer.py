@@ -2,10 +2,10 @@ from random import randint
 import sys
 import time
 sys.path.insert(0, '../src')
-# from utils.queueNode import Queue
-# from utils.config import content_data, example, media_songs_list
-from config import content_data, example, media_songs_list
-from queueNode import Queue
+from utils.queueNode import Queue
+from utils.config import content_data, example, media_songs_list
+# from config import content_data, example, media_songs_list
+# from queueNode import Queue
 
 from time import sleep
 import threading
