@@ -1,4 +1,6 @@
 import random
+import time
+import sys
 nested_list = [['a', 'b'], ['g', 'w', 's']]
 
 # Convertir la lista anidada en una sola lista
@@ -40,3 +42,34 @@ list_song_genres = random.sample(song_genre, random_number)
 print(list_song_genres)
 gender_list = ', '.join(list_song_genres)
 print(gender_list)
+
+print("\n")
+
+
+
+"""
+esta es la salida 
+
+4  17 🎧 Love Me Again ♩
+ 5  2  🎵 Sonido Machacas - Acatepec Guerrero
+          nited State-New York (Pal ft Sain
+          rm K. JJ) England Fix (Live -
+Streaming) ♩
+6  4  🎻 Love and Sex ♩
+ 7  12 🎶 Something of My Own (Project
+Regeneration) ♩
+
+lo que necesito es 
+
+4  17 🎧 Love Me Again ♩
+ 5  2  🎵 Sonido Machacas - Acatepec Guerrero
+          y United State-New York (Pal ft Sain
+          R. Isis Burm K. JJ) England Fix 
+          (Live - Streaming) ♩
+6  4  🎻 Love and Sex ♩
+ 7  12 🎶 Something of My Own (Project
+          Regeneration) ♩
+
+"""
+
+'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)'

@@ -2,13 +2,11 @@ from random import randint
 import sys
 import time
 sys.path.insert(0, '../src')
-from utils.queueNode import Queue
-from utils.config import content_data, example, media_songs_list
-# from config import content_data, example, media_songs_list
-# from queueNode import Queue
+# from utils.queueNode import Queue
+# from utils.config import content_data, example, media_songs_list
+from config import content_data, example, media_songs_list
+from queueNode import Queue
 
-# from queueNode import Queue
-# from config import content_data, example
 from time import sleep
 import threading
 import time
@@ -39,6 +37,15 @@ def print_intro(message, dot_count=6, dot_delay=0.25):
   for char in message:
     print(char, end="", flush=True)
     time.sleep(dot_delay)
+
+def play_spinner(song):
+  spinner = ['-', '\\', '♪', '♩', ' ']
+  for frame in spinner:
+    sys.stdout.write(f'\r{song} {frame}')
+    sys.stdout.flush()
+    time.sleep(1.025)
+  sys.stdout.write(f'\r{song} \n')
+  sys.stdout.flush()
 
 def print_dots_after(width=46, dot_delay=0.525, duration=7):
   dots_num = int(duration / dot_delay)
@@ -190,23 +197,21 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     now_playing = emojis[(idx - 1) % len(emojis)]
     first_line_prefix = f"{track} {now_playing} "
     current_line = first_line_prefix
-    empty_line = " " * (len(first_line_prefix) - 11)
-    spacing_line = " " * 11
+    # empty_line = " " * len(first_line_prefix) 
+    spacing_line = " " * len(first_line_prefix)
+    # spacing_line = " " * 8
     words = title.split()
     title_lines = []
-    initial_spacing = " " * 1
 
     for word in words:
       if len(current_line) + len(word) + 1 > width:
         title_lines.append(current_line.strip())
-        current_line = empty_line + word + " "
+        current_line = spacing_line + word + " "
       else:
         current_line += word + " "
   
     title_lines.append(current_line.strip())
-    print(initial_spacing, end="", flush=True)
 
-    # Print each line of the title with a delay
     for i, line in enumerate(title_lines):
       if i == 0:
         # Print the first line with the prefix
@@ -216,16 +221,14 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       else:
         # Print subsequent lines with proper indentation
         print("\n" + spacing_line, end="", flush=True)
-        # print("empty line", empty_line)
-        for char in line[len(empty_line):]:
+        trimmed = line[len(spacing_line):]
+        for char in trimmed:
           print(char, end="", flush=True)
           time.sleep(char_delay)
 
-      # If it's the last line of the title, print dots
-      if i == len(title_lines) - 1:
-        dot_thread = threading.Thread(target=print_dots_after, args=(width,))
-        dot_thread.start()
-        dot_thread.join()
+    # Mostrar spinner en la última línea ya construida
+    last_line = title_lines[-1]
+    play_spinner(last_line)
 
 
   def print_node_with_delay(self, idx, title, width=46, char_delay=0.0125):
@@ -283,7 +286,7 @@ def main():
 
 
   track1 = Track('Beautiful Things')
-  track2 = Track('Love Me Again')
+  track2 = Track('Simple Plan - Can not Keep My Hands Off You - feat. Rivers Cuomo')
   track3 = Track('Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)')
   track4 = Track('Love and Sex')
   track5 = Track('Something of My Own (Project Regeneration)')
