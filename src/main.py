@@ -4,7 +4,6 @@ from utils.config import content_data, list_favorite_songs, media_songs_list, li
 import random
 
 def print_options():
-  print("\n")
   options = [
     "  [1] Ⱥdd Ş🎧ngs",
     "  [2] Şelect Ⱥlbum",
@@ -21,7 +20,6 @@ def print_options():
 
 def main():
   media = MediaPlayerQueue()
-  # print("\n")
   print("" * 1, "-" * 53)
   search = input(f" Enter Artist name: ")
   search_artist = server.search_for_artist(search)
@@ -58,7 +56,7 @@ def main():
   
   # media.pause()
   media.delay()
-  print()
+  # print()
 
   songs_list = []
   print_songs_list = []
@@ -156,6 +154,7 @@ def main():
           album_tracks_data.append(album_songs)
           # print(album_songs)
           # print("" * 1, "-" * 53)
+          print()
           print("" * 1, "-" * 53)
           # print(f"  Album: {artist_album[select_album]['album']['album_name']}")
           print(f"  Album: {indentation_title1(artist_album[select_album]['album']['album_name'])}")
@@ -181,8 +180,9 @@ def main():
             track = f"track{count}"
             track = Track(name)
             media.add_track(track)
-        
+
           media.delay()
+          print("\n")
           break
         else:
           print(" Please enter a number of albums.")
@@ -249,7 +249,7 @@ def main():
           if result.count(item) < 1:
             result.append(item)
       # print(result)
-      print("\n")
+      print()
 
       for idx, song in enumerate(result):
       #   print(f"{idx + 1} {song}")
@@ -337,6 +337,7 @@ def main():
       
   while True:
     try:
+      print()
       print_options()
       option = int(input("\n Option: "))
       if option == 1:
@@ -345,7 +346,9 @@ def main():
         print("  Ⱥdd Şongs Ⱥs Favorites")
         print("" * 1, "-" * 53)
         tracklist()
+        print()
       elif option == 2:
+        print()
         print("" * 1, "-" * 53)
         print(f"  Artist: {search_artist['artist']['artist_name']}")
         print(f"  Country: {search_artist['artist']['artist_country']}")
@@ -364,6 +367,7 @@ def main():
         media_songs_list.clear()
         main()
       elif option == 4:
+        print()
         favorite_sogns()
       elif option == 5:
         song_lyrics()
