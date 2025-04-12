@@ -7,7 +7,7 @@ cd musixmatchAPI
 python3 main.py
 ```
 
-##### To run mediaPlayer, uncomment and comment line 4, 5
+##### To run mediaPlayer, uncomment and comment line 3, 4
 
 ```sh
 cd utils/

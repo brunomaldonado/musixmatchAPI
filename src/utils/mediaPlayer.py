@@ -1,7 +1,3 @@
-from random import randint
-import sys
-import time
-sys.path.insert(0, '../src')
 from utils.queueNode import Queue
 from utils.config import content_data, example, media_songs_list
 # from config import content_data, example, media_songs_list
@@ -10,7 +6,11 @@ from utils.config import content_data, example, media_songs_list
 from time import sleep
 import threading
 import time
+from random import randint
 import random
+import sys
+import time
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -27,7 +27,7 @@ emojis = ['🔊', '🎼', '💽', '🎧', '🎵', '🎻', '🎶', '🎷', '🎸'
 def print_intro(message, dot_count=6, dot_delay=0.25):
   random = randint(0, 5)
   play = ' '.join(map(str, emojis[random]))
-  print(f"  ♪♩.{play}.♩♪...♩.", end="", flush=True)
+  print(f"  ♪♩....{play}.♩♪...♩", end="", flush=True)
   for _ in range(dot_count):
     print(".", end="", flush=True)
     time.sleep(dot_delay)
@@ -167,26 +167,31 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       current_track_node = self.dequeue()
       # print(idx, current_track_node)
       # idx += 1
-
+      
       if i < len(indices):
         idx = i + 1
         if idx < 10:
-          spacing_line = " " * 1
-          print(spacing_line, end="", flush=True)
-          index = f"{idx}"
+          # spacing_line = " " * 1
+          # print(spacing_line, end="", flush=True)
+          spacing_after = " " * 0
+          spacing_line = " " * 2
+          print(spacing_after, end="", flush=True)
+          index = f"{idx}{spacing_line}"
         else:
-          index = f"{idx}"
+          # index = f"{idx}"
+          spacing_line = " "
+          index = f"{idx}{spacing_line}"
         
         if indices[i] < 10:
           spacing_after = " " * 0
-          spacing_line = " "
+          spacing_line = " " * 2
           print(spacing_after, end="", flush=True)
           tracks = f"{indices[i]}{spacing_line}"
         else:
-          spacing_line = ""
+          spacing_line = " "
           tracks = f"{indices[i]}{spacing_line}"
 
-        track = f"{index}  {tracks}" 
+        track = f"{index} {tracks}" 
 
         # print(track, current_track_node)
         self.print_title_with_delay(idx, track, current_track_node)
@@ -197,16 +202,16 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     now_playing = emojis[(idx - 1) % len(emojis)]
     first_line_prefix = f"{track} {now_playing} "
     current_line = first_line_prefix
-    # empty_line = " " * len(first_line_prefix) 
-    spacing_line = " " * len(first_line_prefix)
-    # spacing_line = " " * 8
+    empty_line = " " * (len(first_line_prefix) - 10)
+    spacing_line = " " * 11
     words = title.split()
     title_lines = []
 
     for word in words:
+      
       if len(current_line) + len(word) + 1 > width:
         title_lines.append(current_line.strip())
-        current_line = spacing_line + word + " "
+        current_line = empty_line + word + " "
       else:
         current_line += word + " "
   
@@ -221,14 +226,17 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       else:
         # Print subsequent lines with proper indentation
         print("\n" + spacing_line, end="", flush=True)
-        trimmed = line[len(spacing_line):]
+        trimmed = line[len(empty_line):]
         for char in trimmed:
           print(char, end="", flush=True)
           time.sleep(char_delay)
-
+      
     # Mostrar spinner en la última línea ya construida
     last_line = title_lines[-1]
-    play_spinner(last_line)
+    if len(title_lines) == 1:
+      play_spinner(f"{last_line}")
+    else:
+      play_spinner(f"{spacing_line}{last_line}")
 
 
   def print_node_with_delay(self, idx, title, width=46, char_delay=0.0125):
@@ -274,8 +282,6 @@ def main():
   print()
   print(" " * 1, "-" * 53)
   songs = ['Perfect', 'Stay Alive']
-  print("\n")
-
 
   for idx, song in enumerate(songs):
     # print(f"{idx + 1} {song}")
@@ -283,23 +289,35 @@ def main():
     track = f"track{count}"
     track = Track(song)
     media.add_track(track)
+  print()
 
+  # print_intro("play \n\n")
 
   track1 = Track('Beautiful Things')
   track2 = Track('Simple Plan - Can not Keep My Hands Off You - feat. Rivers Cuomo')
   track3 = Track('Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)')
   track4 = Track('Love and Sex')
   track5 = Track('Something of My Own (Project Regeneration)')
-  # track6 = Track('No Quiero Que Te Vayas')
-  # track7 = Track('Fanatica Sensual')
+  track6 = Track('No Quiero Que Te Vayas')
+  track7 = Track('Fanatica Sensual')
+  track8 = Track('Love You')
+  track9 = Track('Zombie (Live from the NIVA Save Our Stages Festival)')
+  track10 = Track('Zombie')
+  track11 = Track('Country Road')
+  track12 = Track('Memories')
 
   media.add_track(track1)
   media.add_track(track2)
   media.add_track(track3)
   media.add_track(track4)
   media.add_track(track5)
-  # media.add_track(track6)
-  # media.add_track(track7)
+  media.add_track(track6)
+  media.add_track(track7)
+  media.add_track(track8)
+  media.add_track(track9)
+  media.add_track(track10)
+  media.add_track(track11)
+  media.add_track(track12)
 
   media.play()
 if __name__ == '__main__':
