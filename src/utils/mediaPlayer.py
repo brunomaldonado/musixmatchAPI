@@ -202,16 +202,16 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     now_playing = emojis[(idx - 1) % len(emojis)]
     first_line_prefix = f"{track} {now_playing} "
     current_line = first_line_prefix
-    empty_line = " " * (len(first_line_prefix) - 10)
-    spacing_line = " " * 11
+    empty_line = " " * (len(first_line_prefix) - 13)
+    spacing_line = " " * 13
     words = title.split()
     title_lines = []
+    initial_line = " " * 2
 
     for word in words:
-      
       if len(current_line) + len(word) + 1 > width:
         title_lines.append(current_line.strip())
-        current_line = empty_line + word + " "
+        current_line = f"{empty_line}{word} "
       else:
         current_line += word + " "
   
@@ -220,13 +220,17 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     for i, line in enumerate(title_lines):
       if i == 0:
         # Print the first line with the prefix
+        if len(title_lines) > 1 and len(line) > width - 10:
+          trimmed_first_line = line[: width - 10]
+          print(initial_line, end="", flush=True)
+
         for char in line:
           print(char, end="", flush=True)
           time.sleep(char_delay)
       else:
         # Print subsequent lines with proper indentation
         print("\n" + spacing_line, end="", flush=True)
-        trimmed = line[len(empty_line):]
+        trimmed = line.strip()
         for char in trimmed:
           print(char, end="", flush=True)
           time.sleep(char_delay)
@@ -234,7 +238,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     # Mostrar spinner en la última línea ya construida
     last_line = title_lines[-1]
     if len(title_lines) == 1:
-      play_spinner(f"{last_line}")
+      play_spinner(f"{initial_line}{last_line}")
     else:
       play_spinner(f"{spacing_line}{last_line}")
 
@@ -242,7 +246,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
   def print_node_with_delay(self, idx, title, width=46, char_delay=0.0125):
     if idx > 0 and idx < 10:
       spacing_after = " " * 0
-      initial_space = (" " * 2)
+      initial_space = " " * 2
       print(spacing_after, end="", flush=True)
       index = f"{initial_space}{idx}"
     else:
@@ -254,6 +258,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     empty_line = " " * (len(first_line_prefix) - 4)
     title_lines = []
     spacing_line = " " * 4
+    initial_line = " " * 2
     
     for word in title.split():
       if len(current_line) + len(word) + 1 > width:

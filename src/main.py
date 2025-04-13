@@ -364,11 +364,13 @@ def main():
         media.delay()
         album_list()
       elif option == 3:
+        print()
         media_songs_list.clear()
         main()
       elif option == 4:
         print()
         favorite_sogns()
+        print()
       elif option == 5:
         song_lyrics()
       elif option == 6:
