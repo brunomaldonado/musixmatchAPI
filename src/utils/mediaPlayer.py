@@ -251,21 +251,22 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       index = f"{initial_space}{idx}"
     else:
       initial_space = " "
-      index = f"{idx}"
+      index = f"{initial_space}{idx}"
 
     first_line_prefix = f"{index} "
     current_line = first_line_prefix
     empty_line = " " * (len(first_line_prefix) - 4)
-    title_lines = []
     spacing_line = " " * 4
-    initial_line = " " * 2
+    words = title.split()
+    title_lines = []
     
-    for word in title.split():
+    for word in words:
       if len(current_line) + len(word) + 1 > width:
         title_lines.append(current_line.strip())
-        current_line = empty_line + word + " "
+        current_line = f"{empty_line}{word} "
       else:
         current_line += word + " "
+
     title_lines.append(current_line.strip())
     
     # print each line of the title with a delay
@@ -278,7 +279,8 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       else:
       # print subsequent lines with proper identation
         print("\n", spacing_line, end="", flush=True)
-        for char in line[len(empty_line):]:
+        trimmed = line.strip()
+        for char in trimmed:
           print(char, end="", flush=True)
           time.sleep(char_delay)
 
