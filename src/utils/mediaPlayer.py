@@ -22,21 +22,94 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-emojis = ['🔊', '🎼', '💽', '🎧', '🎵', '🎻', '🎶', '🎷', '🎸', '💿', '🎹', '🎼', '🪗', '🎤']
+emojis = ['🔊', '🪗', '💽', '🎧', '🎵', '🎻', '🎶', '🎷', '🎸', '💿', '🎹', '🎼', '🪗', '🎤']
+random = randint(0, 5)
+play = ' '.join(map(str, emojis[random]))
+message1 = f".♪..♩...{play}.♩♪...♩ Play"
+message2 = r"""ng Playl"""
+message3 = r"""st...♩♪.║(O)║♩ ♫ ♪ ♫"""
 
-def print_intro(message, dot_count=6, dot_delay=0.25):
-  random = randint(0, 5)
-  play = ' '.join(map(str, emojis[random]))
-  print(f"  ♪♩....{play}.♩♪...♩", end="", flush=True)
+radio_art1 = [
+  "╔═══╗",
+  "║███║",
+]
+radio_art2 = [
+  "st...♩♪.║(O)║♩ ♫ ♪ ♫",
+  "╚═══╝"
+]
+
+# art4 = r"""    ╚═══╝"""
+
+def spinner_letter(letter, letter_i="ɨ"):
+  spinner_chars = ['-', '\\', '♪', '♩', 'i']
+
+  for frame in spinner_chars:
+    sys.stdout.write(f"\r{letter}{frame}")
+    sys.stdout.flush()
+    time.sleep(0.25)
+  # sys.stdout.write(f"\r{letter}{bcolors.OKGREEN}i{bcolors.ENDC}")
+  sys.stdout.write(f"\r{letter}{letter_i}")
+  sys.stdout.flush()
+
+
+def print_characters_after(title, dot_count=0, dot_delay=0.25):
   for _ in range(dot_count):
     print(".", end="", flush=True)
     time.sleep(dot_delay)
-  print(" ", end="", flush=True)
-  # print(message)
+  print("", end="", flush=True)
 
-  for char in message:
+  for char in title:
     print(char, end="", flush=True)
     time.sleep(dot_delay)
+                                    #46
+def print_radio_art(art_lines, indent=42, width=46, char_delay=0.25):
+  spacing = " " * indent
+  
+  for line in art_lines:
+    print(spacing, end="", flush=True)
+    for char in line:
+      print(char, end="", flush=True)
+      time.sleep(char_delay)
+    print()
+  
+def starting_message(title, width=46, char_delay=0.25):
+  current_line = " "
+  title_lines = []
+  spacing_line = " " * 2
+
+  for word in title.split():
+    if len(current_line) + len(word) + 1 > width:
+      title_lines.append(current_line.strip())
+      current_line = word + " "
+    else:
+      current_line += word + " "
+  title_lines.append(current_line.strip())
+
+  # print each line of the title with a delay
+  print(f"{spacing_line}", end="", flush=True)
+  for i, line in enumerate(title_lines):
+    if i == 0:
+      for char in line:
+        print(char, end="", flush=True)
+        time.sleep(char_delay)
+    else:
+      # print subsequent lines with proper identation
+      for char in line.strip():
+        print(char, end="", flush=True)
+        time.sleep(char_delay)
+
+  last_line = title_lines[-1]
+  last_line1 = message2[-1]
+
+  if len(title_lines) == 1:
+    spinner_letter(f"{spacing_line}{last_line}")
+    print_characters_after(message2)
+    #print(f"--")
+    spinner_letter(f"{spacing_line}{message1}i{message2[:-1]}{last_line1}")
+    print_characters_after(message3)
+    print()
+    print_radio_art(radio_art2[1:])
+    # print(f"\n{initial_space}{art4}")
 
 def play_spinner(song):
   spinner = ['-', '\\', '♪', '♩', ' ']
@@ -44,7 +117,7 @@ def play_spinner(song):
     sys.stdout.write(f'\r{song} {frame}')
     sys.stdout.flush()
     time.sleep(1.025)
-  sys.stdout.write(f'\r{song} \n')
+  sys.stdout.write(f'\r{song}\n')
   sys.stdout.flush()
 
 def print_dots_after(width=46, dot_delay=0.525, duration=7):
@@ -55,6 +128,7 @@ def print_dots_after(width=46, dot_delay=0.525, duration=7):
     time.sleep(dot_delay)
   print(" ok", flush=True)
   #print(f"{bcolors.OKGREEN}ok{bcolors.ENDC}", flush=True)
+
 
 # necesitamos instanciar canciones con la clase Track
 class Track:
@@ -78,9 +152,9 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       sample_size = list_size
     else:
       sample_size = 3
-    random_numbers = random.sample(range(1, list_size + 1), sample_size)
+    # random_numbers = random.sample(range(1, list_size + 1), sample_size)
     # random_numbers = [4, 7, 2]
-    sorted_numbers = sorted(random_numbers)
+    # sorted_numbers = sorted(random_numbers)
     # print(len(sorted_numbers))
 
     idx = 1
@@ -288,8 +362,12 @@ def main():
   media = MediaPlayerQueue()
   print()
   print(" " * 1, "-" * 53)
-  songs = ['Perfect', 'Stay Alive']
+  print()
+  print_radio_art(radio_art1)
+  starting_message(message1)
 
+  songs = ['Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Stay Alive']
+  print("\n")
   for idx, song in enumerate(songs):
     # print(f"{idx + 1} {song}")
     count = idx + 1
@@ -298,33 +376,10 @@ def main():
     media.add_track(track)
   print()
 
-  # print_intro("play \n\n")
-
   track1 = Track('Beautiful Things')
   track2 = Track('Simple Plan - Can not Keep My Hands Off You - feat. Rivers Cuomo')
-  track3 = Track('Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)')
-  track4 = Track('Love and Sex')
-  track5 = Track('Something of My Own (Project Regeneration)')
-  track6 = Track('No Quiero Que Te Vayas')
-  track7 = Track('Fanatica Sensual')
-  track8 = Track('Love You')
-  track9 = Track('Zombie (Live from the NIVA Save Our Stages Festival)')
-  track10 = Track('Zombie')
-  track11 = Track('Country Road')
-  track12 = Track('Memories')
 
-  media.add_track(track1)
-  media.add_track(track2)
-  media.add_track(track3)
-  media.add_track(track4)
-  media.add_track(track5)
-  media.add_track(track6)
-  media.add_track(track7)
-  media.add_track(track8)
-  media.add_track(track9)
-  media.add_track(track10)
-  media.add_track(track11)
-  media.add_track(track12)
+
 
   media.play()
 if __name__ == '__main__':

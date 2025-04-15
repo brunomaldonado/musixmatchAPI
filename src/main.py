@@ -1,5 +1,5 @@
 from utils import server
-from utils.mediaPlayer import Track, MediaPlayerQueue, print_intro, play_spinner
+from utils.mediaPlayer import Track, MediaPlayerQueue, starting_message, print_radio_art
 from utils.config import content_data, list_favorite_songs, media_songs_list, list_favorite_artists, list_artists_countries, indentation_title1, indentation_title2, indentation_title3
 import random
 
@@ -237,7 +237,14 @@ def main():
       print("" * 1, "-" * 53)
       print()
 
-      print_intro(" Playing playlist..♪..♩♪.♩.\n")
+      message1 = f".♪..♩...🎼.♩♪...♩ Play"
+      radio_art1 = [
+          "╔═══╗",
+          "║███║",
+      ]
+
+      print_radio_art(radio_art1)
+      starting_message(message1)
 
       seen = set()
       result = []

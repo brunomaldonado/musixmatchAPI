@@ -46,30 +46,24 @@ print(gender_list)
 print("\n")
 
 
+import time
 
-"""
-esta es la salida 
+def print_radio_art(art_lines, indent=46, char_delay=0.25):
+    spacing = " " * indent
+    for line in art_lines:
+        print(spacing, end="", flush=True)
+        for char in line:
+            print(char, end="", flush=True)
+            time.sleep(char_delay)
+        print()  # salto de línea al final de cada línea
 
-4  17 🎧 Love Me Again ♩
- 5  2  🎵 Sonido Machacas - Acatepec Guerrero
-          nited State-New York (Pal ft Sain
-          rm K. JJ) England Fix (Live -
-Streaming) ♩
-6  4  🎻 Love and Sex ♩
- 7  12 🎶 Something of My Own (Project
-Regeneration) ♩
+# Definimos el arte como lista de líneas
+radio_art = [
+    "╔═══╗",
+    "║███║",
+    "║(O)║ ♫ ♪ ♫ ♪",
+    "╚═══╝"
+]
 
-lo que necesito es 
-
-4  17 🎧 Love Me Again ♩
- 5  2  🎵 Sonido Machacas - Acatepec Guerrero
-          y United State-New York (Pal ft Sain
-          R. Isis Burm K. JJ) England Fix 
-          (Live - Streaming) ♩
-6  4  🎻 Love and Sex ♩
- 7  12 🎶 Something of My Own (Project
-          Regeneration) ♩
-
-"""
-
-'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)'
+# Llamamos la función
+print_radio_art(radio_art)
