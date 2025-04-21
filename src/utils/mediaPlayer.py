@@ -22,12 +22,12 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-emojis = ['🔊', '🪗', '💽', '🎧', '🎵', '🎻', '🎶', '🎷', '🎸', '💿', '🎹', '🎼', '🪗', '🎤']
+emojis = ['🔊', '🎧', '💽', '🎵', '🎻', '🎷', '🪗', '🎸', '💿', '🎹', '🎼', '🪗', '🎤']
 random = randint(0, 5)
 play = ' '.join(map(str, emojis[random]))
 message1 = f".♪..♩...{play}.♩♪...♩ Play"
 message2 = r"""ng Playl"""
-message3 = r"""st...♩♪.║(O)║♩ ♫ ♪ ♫"""
+message3 = r"""st......║(O)║♩ ♫ ♪ ♫"""
 
 radio_art1 = [
   "╔═══╗",
@@ -105,20 +105,21 @@ def starting_message(title, width=46, char_delay=0.25):
     spinner_letter(f"{spacing_line}{last_line}")
     print_characters_after(message2)
     #print(f"--")
-    spinner_letter(f"{spacing_line}{message1}i{message2[:-1]}i{last_line1}")
+    spinner_letter(f"{spacing_line}{message1}i{message2[:-1]}{last_line1}")
     print_characters_after(message3)
     print()
     print_radio_art(radio_art2[1:])
     # print(f"\n{initial_space}{art4}")
 
 def play_spinner(song):
-  spinner = ['-', '\\', '♪', '♩', ' ']
+  spinner = ['🔊', '-', '\\', '♪', '♩', ' ']
   for frame in spinner:
-    sys.stdout.write(f'\r{song} {frame}')
+    sys.stdout.write(f'\r{song} {frame} ')
     sys.stdout.flush()
     time.sleep(1.025)
-  sys.stdout.write(f'\r{song}\n')
+  sys.stdout.write(f'\r{song} \n')
   sys.stdout.flush()
+
 
 def print_dots_after(width=46, dot_delay=0.525, duration=7):
   dots_num = int(duration / dot_delay)

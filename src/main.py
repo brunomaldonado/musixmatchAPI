@@ -39,7 +39,12 @@ def main():
 
   print("" * 1, "-" * 53)
   print(f"  Artist: {artist}")
-  print(f"  Country: {search_artist['artist']['artist_country']}")
+  country = search_artist['artist']['artist_country']
+  if not str(country).strip():
+    artist_country = f"UK"
+  else:
+    artist_country = country
+  print(f"  Country: {artist_country}")
   print(f"  {len(artist_album)} Album")
   print("" * 1, "-" * 53)
 
@@ -106,13 +111,6 @@ def main():
         if isinstance(add_song, int):
           list_favorite_songs.append(songs_list[add_song])
           list_favorite_artists.append(search_artist['artist']['artist_name'])
-          country = search_artist['artist']['artist_country']
-
-          if not str(country).strip():
-            artist_country = f"LDN"
-          else:
-            artist_country = country
-
           list_artists_countries.append(artist_country) 
 
           if list_favorite_songs.count(songs_list[add_song]) > 1:
