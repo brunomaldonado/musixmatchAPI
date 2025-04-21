@@ -41,7 +41,7 @@ radio_art2 = [
 # art4 = r"""    ╚═══╝"""
 
 def spinner_letter(letter, letter_i="ɨ"):
-  spinner_chars = ['-', '\\', '♪', '♩', 'i']
+  spinner_chars = ['-', '\\', '♪', '♩']
 
   for frame in spinner_chars:
     sys.stdout.write(f"\r{letter}{frame}")
@@ -105,7 +105,7 @@ def starting_message(title, width=46, char_delay=0.25):
     spinner_letter(f"{spacing_line}{last_line}")
     print_characters_after(message2)
     #print(f"--")
-    spinner_letter(f"{spacing_line}{message1}i{message2[:-1]}{last_line1}")
+    spinner_letter(f"{spacing_line}{message1}i{message2[:-1]}i{last_line1}")
     print_characters_after(message3)
     print()
     print_radio_art(radio_art2[1:])

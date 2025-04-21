@@ -2,6 +2,7 @@ from utils import server
 from utils.mediaPlayer import Track, MediaPlayerQueue, starting_message, print_radio_art
 from utils.config import content_data, list_favorite_songs, media_songs_list, list_favorite_artists, list_artists_countries, indentation_title1, indentation_title2, indentation_title3
 import random
+import textwrap
 
 def print_options():
   options = [
@@ -108,7 +109,7 @@ def main():
           country = search_artist['artist']['artist_country']
 
           if not str(country).strip():
-            artist_country = f"&$"
+            artist_country = f"LDN"
           else:
             artist_country = country
 
@@ -134,6 +135,8 @@ def main():
 
 
   album_tracks_data = []
+  artist_album_tracks_data = []
+  artist_album_tracks_data.append(album_tracks_data)
   def album_list():
     album_id = [album['album']['album_id'] for album in artist_album]
 
@@ -271,8 +274,12 @@ def main():
     print("" * 1, "-" * 53)
     print("  Şongs ƪ¥℞ɨÇ$")
     print("" * 1, "-" * 53)
+    # print(artist_album_tracks_data)
+    
     id_songs = [id['track']['track_id'] for sublist in album_tracks_data for id in sublist]
     name_songs = [name['track']['track_name'] for sublist in album_tracks_data for name in sublist]
+    # print(f"\nid_songs\n{id_songs}\nname_songs\n{name_songs}")
+
     seen = set()
     single_names = []
     unique_id = []
@@ -299,7 +306,30 @@ def main():
     # print()
     # print(single_names)
     # print() 
+
     name_map = {name: track_name for name, track_name in enumerate(single_names)}
+
+    my_dict = {}
+    singer_song = []
+
+    for singer, song in zip(artist, single_names):
+      my_dict[singer] = song
+      a_s = f"{artist} - {song}"
+      singer_song.append(a_s)
+    
+    singer_song.extend(list_favorite_songs)
+    # print(singer_song)
+
+    seen_song = set()
+    unique_values = []
+
+    for name in singer_song:
+      if name not in seen_song:
+        seen_song.add(name)
+        unique_values.append(name)
+    
+    # for idx, song in enumerate(unique_values, start=1):
+    #   print(f"{idx} {song}")
 
     for idx, name in enumerate(single_names, start=1):
       # print(f"{idx:2} {name}")
@@ -325,11 +355,42 @@ def main():
           track_id = id_map[track]
           track_name = name_map[track]
           lyrics_songs =  server.get_songs_by_lyrics(track_id)
-          print("\n")
-          print(f" Title: {track_name}")
-          print("\n" + lyrics_songs['lyrics_body'])
+          # print(f"\n\nlyriscs song {lyrics_songs}\n\n")
+          # print("\n")
+          # print(f"  {track_name}\n")
           # print()
-          # print(lyrics_songs)
+          # for line in lyrics_songs['lyrics_body'].split("\n"):
+          #   if '**' not in line and not line.strip().isdigit() and not line.strip().startswith('(') and not line.strip().endswith(')'):
+          #     print(line)
+          # print("\n" + lyrics_songs['lyrics_body'])
+          spacing_line = " " * 2
+          max_width = 50
+          print("\n")
+          title = f"{track_name}"
+          wrapped_title = textwrap.wrap(title, max_width)
+
+          for line in wrapped_title:
+            underline = "˜" * len(line)
+            print(f"{spacing_line}{line}")
+            print(f"{spacing_line}{underline}")
+          print()
+
+          for line in lyrics_songs['lyrics_body'].split("\n"):
+            line = line.strip()
+
+            if not line:
+              print()
+              continue
+
+            if ('**' in line) or line.isdigit() or line.startswith('(') or line.endswith(')'):
+              continue
+
+            wrapped_lines = textwrap.wrap(line, width=max_width)
+
+            for wrapped_line in wrapped_lines:
+              print(f"{spacing_line}{wrapped_line}")
+
+          print()
         else:
           print(' Please enter a number of lyrics songs.')
           if attempts > 3:
