@@ -21,6 +21,7 @@ def print_options():
 
 def main():
   media = MediaPlayerQueue()
+  print()
   print("" * 1, "-" * 53)
   search = input(f" Enter Artist name: ")
   search_artist = server.search_for_artist(search)
@@ -34,19 +35,19 @@ def main():
   else:
     pass
   
-  artist_name = {search_artist['artist']['artist_name']}
-  artist = list(artist_name)[0]
-
-  print("" * 1, "-" * 53)
-  print(f"  Artist: {artist}")
+  artist = search_artist['artist']['artist_name']  
   country = search_artist['artist']['artist_country']
   if not str(country).strip():
     artist_country = f"UK"
   else:
     artist_country = country
+
+  print("" * 1, "-" * 53)
+  print(f"  Artist: {artist}")
   print(f"  Country: {artist_country}")
   print(f"  {len(artist_album)} Album")
   print("" * 1, "-" * 53)
+  print()
 
   album_name = []
   for idx, album in enumerate(artist_album, start=1):
@@ -62,7 +63,7 @@ def main():
   
   # media.pause()
   media.delay()
-  # print()
+  print()
 
   songs_list = []
   print_songs_list = []
@@ -101,12 +102,10 @@ def main():
       else:
         return " Invalid Selection"
     
-    print()
-    
     attempts = 1
     while True:
       try:
-        selection = int(input("\n Selected song # to add: "))
+        selection = int(input(" Select the song # to add: "))
         add_song = select_index(selection)
         if isinstance(add_song, int):
           list_favorite_songs.append(songs_list[add_song])
@@ -114,23 +113,23 @@ def main():
           list_artists_countries.append(artist_country) 
 
           if list_favorite_songs.count(songs_list[add_song]) > 1:
-            print(" This song has been added recently...")
+            print(f" This song has been added recently...\n")
           else:
             continue
 
         else:
-          print(" Enter a number of song to add.")
+          print(" Enter a number of song to add.\n")
           if attempts > 3:
             tracklist()
             break
-        option = int(input("\n [1] Selected song #   [2] Exit\n Option: "))
+        option = int(input(" [1] Selected song #   [2] Exit\n Option: "))
 
         if option == 2:
+          print()
           break
       except ValueError:
-        print(" Invalid selection. Please enter a number.")
+        print(" Invalid selection. Please enter a number.\n")
       attempts += 1
-
 
   album_tracks_data = []
   artist_album_tracks_data = []
@@ -143,12 +142,12 @@ def main():
         return selection - 1
       else:
         return " Invalid selection"
-    print()
 
     while True:
       try: 
-        selection = int(input(f"\n Selected album #: "))
+        selection = int(input(f" Selected album #: "))
         # print(select_album)
+        # print()
         select_album = select_index(selection)
         if isinstance(select_album, int):
           album_songs = server.get_songs_by_artist(album_id[select_album])
@@ -164,6 +163,7 @@ def main():
           print(f"  Copyright: {indentation_title2(artist_album[select_album]['album']['album_copyright'])}")
           print(f"  {len(album_songs)} Tracks")
           print("" * 1, "-" * 53)
+          print()
 
           album_tracks = [] # for the delay function from mediaPlayer 
           
@@ -183,12 +183,12 @@ def main():
             media.add_track(track)
 
           media.delay()
-          print("\n")
+          print()
           break
         else:
-          print(" Please enter a number of albums.")
+          print(" Please enter a number of albums.\n")
       except ValueError:
-        print(" Invalid Selection!. Please enter a number.")
+        print(" Invalid Selection!. Please enter a number.\n")
   
   album_list()
 
@@ -244,8 +244,8 @@ def main():
           "║███║",
       ]
 
-      print_radio_art(radio_art1)
-      starting_message(message1)
+      # print_radio_art(radio_art1)
+      # starting_message(message1)
 
       seen = set()
       result = []
@@ -257,7 +257,6 @@ def main():
           if result.count(item) < 1:
             result.append(item)
       # print(result)
-      print()
 
       for idx, song in enumerate(result):
       #   print(f"{idx + 1} {song}")
@@ -265,15 +264,18 @@ def main():
         track = f"track{count}"
         track = Track(song)
         media.add_track(track)
+
       media.play()
+      print()
 
   def song_lyrics():
     print()
     print("" * 1, "-" * 53)
-    print("  Şongs ƪ¥℞ɨÇ$")
+    print("  Şongs L¥℞ɨÇ$")
     print("" * 1, "-" * 53)
     # print(artist_album_tracks_data)
-    
+    print()
+
     id_songs = [id['track']['track_id'] for sublist in album_tracks_data for id in sublist]
     name_songs = [name['track']['track_name'] for sublist in album_tracks_data for name in sublist]
     # print(f"\nid_songs\n{id_songs}\nname_songs\n{name_songs}")
@@ -289,9 +291,9 @@ def main():
       else:
         if unique_id.count(id) < 1:
           unique_id.append(id)
-    # print()
-    # print(unique_id)
-    # print()
+
+    # print(f"\n{unique_id}\n")
+    
     id_map = {index: id_value for index, id_value in enumerate(unique_id)}
 
     for name in name_songs:
@@ -301,9 +303,8 @@ def main():
       else:
         if single_names.count(name) < 1:
           single_names.append(name)
-    # print()
-    # print(single_names)
-    # print() 
+    
+    # print(f"\n{single_names}\n")
 
     name_map = {name: track_name for name, track_name in enumerate(single_names)}
 
@@ -335,19 +336,20 @@ def main():
       track = f"track{count}"
       track = Track(name)
       media.add_track(track)
+
     media.delay()
+    print()
 
     def select_index(selection):
       if 1 <= selection <= len(unique_id):
         return selection - 1
       else:
         return " Invalid selection."
-    print()
 
     attempts = 1
     while True:
       try:
-        select_track = int(input("\n Get lyrics track #: "))
+        select_track = int(input(" Get lyrics track #: "))
         track = select_index(select_track)
         if isinstance(track, int):
           track_id = id_map[track]
@@ -362,7 +364,7 @@ def main():
           #     print(line)
           # print("\n" + lyrics_songs['lyrics_body'])
           spacing_line = " " * 2
-          max_width = 50
+          max_width = 53
           print("\n")
           title = f"{track_name}"
           wrapped_title = textwrap.wrap(title, max_width)
@@ -390,15 +392,16 @@ def main():
 
           print()
         else:
-          print(' Please enter a number of lyrics songs.')
+          print(" Please enter a number of lyrics songs.\n")
           if attempts > 3:
             song_lyrics()
             break
-        option = int(input("\n [1] Select other track #:   [2] Exit\n Option: "))
+        option = int(input(" [1] Select other track #:   [2] Exit\n Option: "))
         if option == 2:
+          print()
           break
       except ValueError:
-        print(" Invalid Selection!. Please enter a number.")
+        print(" Invalid Selection!. Please enter a number.\n")
       attempts += 1
       
   while True:
@@ -411,8 +414,8 @@ def main():
         print("" * 1, "-" * 53)
         print("  Ⱥdd Şongs Ⱥs Favorites")
         print("" * 1, "-" * 53)
-        tracklist()
         print()
+        tracklist()
       elif option == 2:
         print()
         print("" * 1, "-" * 53)
@@ -420,6 +423,7 @@ def main():
         print(f"  Country: {search_artist['artist']['artist_country']}")
         print(f"  {len(artist_album)} Album")
         print("" * 1, "-" * 53)
+        print()
         
         for idx, album in enumerate(album_name, start=1):
           count = idx + 1
@@ -428,6 +432,7 @@ def main():
           media.add_track(track)
       
         media.delay()
+        print()
         album_list()
       elif option == 3:
         print()
@@ -441,6 +446,8 @@ def main():
         song_lyrics()
       elif option == 6:
         exit()
+      else:
+        print(" Seriously!")
     except ValueError:
       print(" Invalid selection, please enter a number!.")
 

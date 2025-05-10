@@ -5,6 +5,7 @@ list_favorite_artists = []
 list_artists_countries = []
 example = [['Beautiful Things', 'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Country Road', 'Love and Sex', 'Zombie', 'When September Ends', 'Memories', 'Love You', 'W. T. F.', 'Beautiful Eyes', 'Fly', 'Something of My Own (Project Regeneration)', 'Stay Alive', 'Regeneration', 'Zombie (Live from the NIVA Save Our Stages Festival)', 'Perfect', 'Love Me Again']]
 import time
+import textwrap
 
 def indentation_title1(title, width=46, char_delay=0):
   # print(" " * 1, "-" * 53)
@@ -31,7 +32,19 @@ def indentation_title1(title, width=46, char_delay=0):
   
   return formatted_title
 
-def indentation_title2(title, width=46, char_delay=0):
+def indentation_title2(title):
+  spacing_line = " " * 13
+  max_width = 41
+  wrapped_text = textwrap.wrap(title, width=max_width)
+  if wrapped_text:
+    formatted_text = f"{wrapped_text[0]}"
+    #print(len(formatted_text))
+    formatted_text += "\n" + "\n".join(spacing_line + line for line in wrapped_text[1:])
+    return formatted_text
+  else:
+      return "2025 brunomaldonado"
+
+def indentation_title22(title, width=46, char_delay=0):
   first_line_prefix = "  "
   current_line = first_line_prefix
   empty_line = " " * (len(first_line_prefix) - 2)
