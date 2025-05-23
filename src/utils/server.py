@@ -1,13 +1,17 @@
 import os, json
 #from dotenv import load_dotenv
 from requests import get, post
+from dotenv import load_dotenv
 
-# Login https://www.musixmatch.com/ 
-api_key = "&apikey=d29b01a27dd289021382091564155a98" 
-#print(api_key)
+# Login https://www.musixmatch.com/
 headers = {
     "Content-Type": "application/json", "Accept": "application/json"
 }
+
+load_dotenv()
+api_key = os.getenv("api_key")
+
+
 def search_for_artist(artist_name):
     url = "https://api.musixmatch.com/ws/1.1/"
     query = f"artist.search?q_artist={artist_name}&page_size"
@@ -18,11 +22,11 @@ def search_for_artist(artist_name):
     json_result = json.loads(result.content)
     # print(json_result)
     json_result = json_result['message']['body']['artist_list']
-    
+
     if len(json_result) == 0:
         print("no artist with this name exist.")
         return None
-    
+
     return json_result[0]
 
 def get_album_by_artist(artist_id):

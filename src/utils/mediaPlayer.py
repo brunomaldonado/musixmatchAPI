@@ -68,14 +68,14 @@ def print_characters_after(title, dot_count=0, dot_delay=0.25):
                                     #46
 def print_radio_art(art_lines, indent=42, width=46, char_delay=0.25):
   spacing = " " * indent
-  
+
   for line in art_lines:
     print(spacing, end="", flush=True)
     for char in line:
       print(char, end="", flush=True)
       time.sleep(char_delay)
     print()
-  
+
 def starting_message(title, width=46, char_delay=0.25):
   current_line = " "
   title_lines = []
@@ -170,7 +170,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       self.print_node_with_delay(idx, current_track_node)
       idx += 1
 
-  def play(self):    
+  def play(self):
     # print(f"\n\nCONTENT DATA {content_data}\nlen {len(content_data)}\n")
 
     if len(content_data) == 0:
@@ -179,7 +179,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       current_list = content_data
 
     favorites_list = self.list_data()
-    
+
     # print(f"\n\ncurrent_list\n {current_list}\nlen {len(current_list)}\n\n")
     # print(f"favorite_list\n {favorites_list}\n")
 
@@ -191,7 +191,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       if item not in seen1:
         seen1.add(item)
         unique_songs_list.append(sublist)
-    
+
     # print(f"\nunique_songs_list\n {unique_songs_list}\n\nlen {len(unique_songs_list)}")
 
     unique_content_data = []
@@ -209,14 +209,14 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     for sublist in unique_content_data:
       not_in_songs_list = [item for item in sublist if item not in unique_songs_list]
       in_songs_list = [item for item in sublist if item in unique_songs_list]
-      
+
       if tuple(not_in_songs_list) and tuple(not_in_songs_list) not in seen_sublist:
         final_current_list.append(not_in_songs_list)
         seen_sublist.add(tuple(not_in_songs_list))
       if tuple(in_songs_list) and tuple(in_songs_list) not in seen_sublist:
         final_current_list.append(in_songs_list)
         seen_sublist.add(tuple(in_songs_list))
-    
+
     current_list = final_current_list
     # print(f"\ncurrent_list\n {current_list}\n\nlen {len(current_list)}")
     # print(f"\nfavorite_list\n {favorites_list}\n")
@@ -237,7 +237,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     #   for sublis2 in current_list:
     #     if sublist1 == sublis2:
     #       print("is equal")
-                
+
     # print(f"\nindices {indices}\n\n")
 
     # idx = 1
@@ -255,7 +255,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
         else:
           spacing_line = ""
           index = f"{spacing_line}{idx}{spacing_after}"
-        
+
         if indices[i] < 10:
           spacing_line = " " * 1
           tracks = f"{spacing_line}{indices[i]}"
@@ -263,7 +263,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
           spacing_line = ""
           tracks = f"{indices[i]}{spacing_line}"
 
-        track = f"{Style.BRIGHT}{index}{Style.RESET_ALL}{tracks}" 
+        track = f"{bcolors.OKCYAN}{index}{bcolors.ENDC}{tracks}"
 
         # print(track, current_track_node)
         self.print_title_with_delay(idx, track, current_track_node)
@@ -288,7 +288,7 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       for char in formatted_text:
         print(char, end="", flush=True)
         time.sleep(char_delay)
-     
+
       last_line =f"{wrapped_text[-1]}"
       if len(wrapped_text) > 1:
         play_spinner(f"{spacing_line}{last_line}")
@@ -308,13 +308,13 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
     else:
       initial_spacing = " "
       index = f"{idx}"
-      
-    first_line_prefix = f"{Style.BRIGHT}{index}{Style.RESET_ALL} {title}"
+
+    first_line_prefix = f"{bcolors.OKCYAN}{index}{bcolors.ENDC} {title}"
     # print(len(current_line))
     current_line = first_line_prefix
     spacing_line = " " * 4
     initial_line = " " * 1
-    
+
     wrapped_text = textwrap.wrap(current_line, width=max_width)
     if wrapped_text:
       formatted_text = f"{initial_line}{wrapped_text[0]}"
@@ -324,63 +324,23 @@ class MediaPlayerQueue(Queue):  #va heredar del Queue que esta basado en nodes (
       for char in formatted_text:
         print(char, end="", flush=True)
         time.sleep(char_delay)
-        
+
       print("\n", end="", flush=True)
-    
+
     else:
       return None
 
-  # def print_node_with_delay(self, idx, title, width=46, char_delay=0.0125):
-  #   if idx > 0 and idx < 10:
-  #     spacing_after = " " * 0
-  #     initial_space = " " * 2
-  #     print(spacing_after, end="", flush=True)
-  #     index = f"{initial_space}{idx}"
-  #   else:
-  #     initial_space = " "
-  #     index = f"{initial_space}{idx}"
-
-  #   first_line_prefix = f"{index} "
-  #   current_line = first_line_prefix
-  #   empty_line = " " * (len(first_line_prefix) - 4)
-  #   spacing_line = " " * 4
-  #   words = title.split()
-  #   title_lines = []
-    
-  #   for word in words:
-  #     if len(current_line) + len(word) + 1 > width:
-  #       title_lines.append(current_line.strip())
-  #       current_line = f"{empty_line}{word} "
-  #     else:
-  #       current_line += word + " "
-
-  #   title_lines.append(current_line.strip())
-    
-  #   # print each line of the title with a delay
-  #   print("\n", initial_space, end="", flush=True)
-  #   for i, line in enumerate(title_lines):
-  #     if i == 0:
-  #       for char in line:
-  #         print(char, end="", flush=True)
-  #         time.sleep(char_delay)
-  #     else:
-  #     # print subsequent lines with proper identation
-  #       print("\n", spacing_line, end="", flush=True)
-  #       trimmed = line.strip()
-  #       for char in trimmed:
-  #         print(char, end="", flush=True)
-  #         time.sleep(char_delay)
 
 def main():
   media = MediaPlayerQueue()
   print()
   print(" " * 1, "-" * 53)
-  print()
+
   # print_radio_art(radio_art1)
   # starting_message(message1)
 
   songs = ['Simple Plan - Can not Keep My Hands Off You - feat. Rivers Cuomo', 'Sonido Machacas - Acatepec Guerrero Mexico y United State-New York (Pal ft Sain R. Isis Burm K. JJ) England Fix (Live - Streaming)', 'Stay Alive']
-  print("\n")
+  print()
   for idx, song in enumerate(songs):
     # print(f"{idx + 1} {song}")
     count = idx + 1

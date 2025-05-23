@@ -14,6 +14,7 @@ def print_options():
     "  [6] Ęxit..."
   ]
 
+
   for i in range(0, len(options), 3):
     print("{:<15} {:<15} {:<15}".format(
       *options[i:i+3], *[''] * (3 - len(options[i:i+3]))
@@ -34,8 +35,8 @@ def main():
     main()
   else:
     pass
-  
-  artist = search_artist['artist']['artist_name']  
+
+  artist = search_artist['artist']['artist_name']
   country = search_artist['artist']['artist_country']
   if not str(country).strip():
     artist_country = f"UK"
@@ -60,7 +61,7 @@ def main():
     track = f"track{count}"
     track = Track(album)
     media.add_track(track)
-  
+
   # media.pause()
   media.delay()
   print()
@@ -75,7 +76,7 @@ def main():
       # if True, remove the first occurrence of song
           songs_list.remove(song)
     # print(f"{songs_list} {len(songs_list)}")
-      
+
     # for idx, songs in enumerate(songs_list, start=1):
     #     print(f"{idx:2} {songs}")
 
@@ -86,22 +87,23 @@ def main():
     for song in print_songs_list:
       if print_songs_list.count(song) > 1:
         print_songs_list.remove(song)
-  
+
     for idx, song in enumerate(print_songs_list, start=1):
       count = idx + 1
       track = f"track{count}"
       track = Track(song)
       media.add_track(track)
-    
+
     media.delay()
     print()
-    
+
+
     def select_index(selection):
       if 1 <= selection <= len(print_songs_list):
         return selection - 1
       else:
         return " Invalid Selection"
-    
+
     attempts = 1
     while True:
       try:
@@ -110,7 +112,7 @@ def main():
         if isinstance(add_song, int):
           list_favorite_songs.append(songs_list[add_song])
           list_favorite_artists.append(search_artist['artist']['artist_name'])
-          list_artists_countries.append(artist_country) 
+          list_artists_countries.append(artist_country)
 
           if list_favorite_songs.count(songs_list[add_song]) > 1:
             print(f" This song has been added recently...\n")
@@ -144,7 +146,7 @@ def main():
         return " Invalid selection"
 
     while True:
-      try: 
+      try:
         selection = int(input(f" Selected album #: "))
         # print(select_album)
         # print()
@@ -165,8 +167,8 @@ def main():
           print("" * 1, "-" * 53)
           print()
 
-          album_tracks = [] # for the delay function from mediaPlayer 
-          
+          album_tracks = [] # for the delay function from mediaPlayer
+
           for idx, track in enumerate(album_songs, start=1):
             # print(f"{idx:2} {track['track']['track_name']}")
             name_songs = track['track']['track_name']
@@ -189,7 +191,7 @@ def main():
           print(" Please enter a number of albums.\n")
       except ValueError:
         print(" Invalid Selection!. Please enter a number.\n")
-  
+
   album_list()
 
   def favorite_sogns():
@@ -199,7 +201,7 @@ def main():
       my_dict[artist] = country
       a_c = f"{artist} ({country})"
       artist_list.append(a_c)
-    
+
     # print(f"\n{my_dict}\n{artist_list}")
 
     unique_artists = []
@@ -293,7 +295,7 @@ def main():
           unique_id.append(id)
 
     # print(f"\n{unique_id}\n")
-    
+
     id_map = {index: id_value for index, id_value in enumerate(unique_id)}
 
     for name in name_songs:
@@ -303,7 +305,7 @@ def main():
       else:
         if single_names.count(name) < 1:
           single_names.append(name)
-    
+
     # print(f"\n{single_names}\n")
 
     name_map = {name: track_name for name, track_name in enumerate(single_names)}
@@ -315,7 +317,7 @@ def main():
       my_dict[singer] = song
       a_s = f"{artist} - {song}"
       singer_song.append(a_s)
-    
+
     singer_song.extend(list_favorite_songs)
     # print(singer_song)
 
@@ -326,7 +328,7 @@ def main():
       if name not in seen_song:
         seen_song.add(name)
         unique_values.append(name)
-    
+
     # for idx, song in enumerate(unique_values, start=1):
     #   print(f"{idx} {song}")
 
@@ -403,7 +405,7 @@ def main():
       except ValueError:
         print(" Invalid Selection!. Please enter a number.\n")
       attempts += 1
-      
+
   while True:
     try:
       print()
@@ -424,13 +426,13 @@ def main():
         print(f"  {len(artist_album)} Album")
         print("" * 1, "-" * 53)
         print()
-        
+
         for idx, album in enumerate(album_name, start=1):
           count = idx + 1
           track = f"track{count}"
           track = Track(album)
           media.add_track(track)
-      
+
         media.delay()
         print()
         album_list()
@@ -441,7 +443,7 @@ def main():
       elif option == 4:
         print()
         favorite_sogns()
-        print()
+        # print()
       elif option == 5:
         song_lyrics()
       elif option == 6:
