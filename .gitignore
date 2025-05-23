@@ -132,6 +132,18 @@ ENV/
 env.bak/
 venv.bak/
 
+# Variables de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+*.env
+.env.*
+
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -174,3 +186,23 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node modules (si usas Node.js)
+node_modules/
+
+# Cache
+.cache/
